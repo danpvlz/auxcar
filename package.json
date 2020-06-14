@@ -27,9 +27,11 @@
   "bugs": {
     "url": "https://github.com/creativetimofficial/argon-design-system-react/issues"
   },
-  "homepage": "https://danpvlz.github.io",
+  "homepage": "https://danpvlz.github.io/temporal",
   "scripts": {
-    "pages": "gh-pages -d build",
+    
+   "predeploy": "react-scripts build && gulp licenses",
+   "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build && gulp licenses",
     "test": "react-scripts test",
