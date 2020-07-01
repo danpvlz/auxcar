@@ -18,7 +18,6 @@ ReactDOM.render(
   <BrowserRouter>
     <Switch>
     
-      <Redirect to="/" />
       <Route path="/" exact render={props => <Inicio {...props} />} />
 
       <Route
@@ -50,6 +49,7 @@ ReactDOM.render(
         exact
         render={props => <Auxilio {...props} />}
       />
+      <Redirect to="/" />
       
     </Switch>
   </BrowserRouter>,
