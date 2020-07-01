@@ -49,8 +49,6 @@ ReactDOM.render(
         exact
         render={props => <Auxilio {...props} />}
       />
-      
-      <Redirect to="/" />
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")
