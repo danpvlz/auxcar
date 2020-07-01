@@ -27,7 +27,6 @@
   "bugs": {
     "url": "https://github.com/creativetimofficial/argon-design-system-react/issues"
   },
-  "homepage": "https://danpvlz.github.io/vehiculos",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
