@@ -5,6 +5,6 @@
 
 ## Empezar
 
-- Clonar repo: `git clone https://github.com/danpvlz/motriztente.git`.
-- Dependencias: `npm i`.
-- Ejecutar: `npm start`.
+- Clonar repo: `git clone https://github.com/danpvlz/motriztente.git`
+- Dependencias: `npm i`
+- Ejecutar: `npm start`
