@@ -6,6 +6,7 @@ class Checkboxes extends React.Component {
       <>
         <div className="custom-control custom-checkbox mb-3">
           <input
+            defaultChecked={this.props.seleccionados.includes(this.props.pregunta.id) ? true : false}
             value={this.props.valor}
             className="custom-control-input preguntas"
             id={'pregunta_'+this.props.pregunta.id}

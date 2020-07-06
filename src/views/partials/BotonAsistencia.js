@@ -9,7 +9,7 @@ import {
 function ReloadButton(props){
   return (
       <Button
-          className="text-white ml-auto"
+          className="text-white"
           color="link"
           type="button"
           onClick={props.formatearData}
@@ -22,9 +22,10 @@ function ReloadButton(props){
 function ReportButton(props){
     return (
         <Button
-            className="text-white ml-auto"
+            className="text-white"
             color="link"
             type="button"
+            
             to={
               {
                 pathname: "/reporte-diagnostico",

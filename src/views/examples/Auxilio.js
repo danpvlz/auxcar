@@ -3,14 +3,12 @@ import {Link} from 'react-router-dom';
 
 // reactstrap components
 import {
-  Container,
   Row,
-  Col
+  Button,
+  Modal
 } from "reactstrap";
 
 // core components
-import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import SimpleFooter from "components/Footers/SimpleFooter.js";
 import Solicitud from "../partials/Solicitud";
 import Finalizado from "../partials/Finalizado";
 
@@ -25,14 +23,14 @@ class Auxilio extends React.Component {
             contacto: "",
             referencia: "",
             done: false,
-            animar: false
+            animar: false,
+            showError: false,
+            mensajeError: "Por favor, complete todos los campos."
         }
     }
+    
   componentDidMount() {
-    if(this.props.location.codDistrito){
-      document.documentElement.scrollTop = 0;
-      document.scrollingElement.scrollTop = 0;
-      this.refs.main.scrollTop = 0;
+    if(this.props.location.codDistrito!=undefined){
       this.getUbicacion();
     }else{
       this.props.history.push('/');
@@ -40,13 +38,16 @@ class Auxilio extends React.Component {
   }
 
   getUbicacion=()=>{
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position)=>{
+    if(navigator.geolocation) {
+      navigator.geolocation.watchPosition((position)=>{
+        console.log("Latitude is :", position.coords.latitude);
+        console.log("Longitude is :", position.coords.longitude);
+
         let src="https://maps.google.com/maps?q="+position.coords.latitude+","+position.coords.longitude+"&z=15&output=embed";
         this.setState({latitud: position.coords.latitude, longitud: position.coords.longitude, src: src});
-        },()=>{console.log("SIN PERMISO");});
+      },()=>{this.setState({mensajeError: "Por favor, otorgue permisos de geolocalización."});});
     }else{
-        console.log("Geolocalización no disponible");
+      this.setState({mensajeError: "Geolocalización no disponible"});
     }
   }
   
@@ -64,13 +65,23 @@ class Auxilio extends React.Component {
     }
   };
 
-  handleSubmit=async()=>{
-    
+  alertState=(e)=>{
+    if(e && e.target.textContent == "×"){
+      this.setState({showError: false});
+    }else{
+      window.scroll(0,0);
+      this.setState({showError: true});
+    }
+  }
+
+
+  handleSubmit=()=>{
     if(this.state.cliente.length>0 &&
       this.state.contacto.length>0 &&
-      this.state.referencia.length>0){
-      
-      let response = await fetch(`https://apiservicio.herokuapp.com/api/diagnostico`, {
+      this.state.referencia.length>0 && 
+      this.state.latitud != 0 && 
+      this.state.longitud != 0){
+      fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/diagnostico`, {
           method: 'POST',
           body: `{
               "distrito": ${this.props.location.codDistrito},
@@ -80,71 +91,62 @@ class Auxilio extends React.Component {
           headers:{
               'Content-Type': 'application/json'
           }
-      });
-      let registroDiagnostico = await response.json();
-      response = await fetch("https://apiservicio.herokuapp.com/api/auxilio",
-      {
-          method: 'POST',
-          body: `
+      }).then(response=>{
+        return response.json();
+      })
+      .then(JSONresponse=>{
+        fetch("https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/auxilio",
           {
-              "lat": ${this.state.latitud},
-              "long": ${this.state.longitud},
-              "cliente": "${this.state.cliente}",
-              "contacto": "${this.state.contacto.substr(3)}",
-              "diagnostico": ${registroDiagnostico.insertedId},
-              "referencia": "${this.state.referencia}"
-          }
-          `,
-          headers:{
-              'Content-Type': 'application/json'
-          }
-      });
-      let stateRegistro = await response.json();
-      
-      if(stateRegistro.status==200){
-        this.setState({animar: true});
-        setTimeout(() => {
-        document.documentElement.scrollTop = 0;
-        document.scrollingElement.scrollTop = 0;
-        this.refs.main.scrollTop = 0;
-        this.setState({done:true});
-      }, 500);
-      }
+            method: 'POST',
+            body: `
+            {
+                "lat": ${this.state.latitud},
+                "long": ${this.state.longitud},
+                "cliente": "${this.state.cliente}",
+                "contacto": "${this.state.contacto.substr(4)}",
+                "diagnostico": ${JSONresponse.insertedId},
+                "referencia": "${this.state.referencia}"
+            }
+            `,
+            headers:{
+                'Content-Type': 'application/json'
+            }
+          }).then(response=>{
+            return response.json(); 
+          }).then(JSONresponse=>{
+            return JSONresponse.status;
+          }).then(status=>{
+            if(status==200){
+              this.setState({animar: true});
+              setTimeout(() => {
+                this.setState({done:true});
+              }, 500);
+            }
+          }).catch(e=>console.log(e));
+      })
+      .catch(e=>console.log(e));      
+    }else{
+      this.alertState();
     }
   }
 
   render() {
     return (
       <>
-        <DemoNavbar />
-        <main ref="main">
-          <section className="section section-shaped section-lg">
-            <div className="shape shape-style-1 bg-gradient-default">
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-            </div>
-            <Container className="pt-lg-7">
-              <Row className="justify-content-center">
-                {
-                  this.state.done ? <Finalizado /> : 
-                  <Solicitud 
-                  animar={this.state.animar}
-                  distrito={this.props.location.asistenciaDistrito}
-                  handleChange={this.handleChange}
-                  src={this.state.src}
-                  handleSubmit={this.handleSubmit}/>
-                }
-              </Row>
-            </Container>
-          </section>
-        </main>
-        <SimpleFooter />
+        <Row className="justify-content-center">
+          {
+            this.state.done ? <Finalizado /> : 
+            <Solicitud 
+            showError={this.state.showError}
+            mensajeError={this.state.mensajeError}
+            animar={this.state.animar}
+            distrito={this.props.location.asistenciaDistrito}
+            handleChange={this.handleChange}
+            src={this.state.src}
+            alertState={this.alertState}
+            handleSubmit={this.handleSubmit}/>
+          }
+        </Row>
       </>
     );
   }

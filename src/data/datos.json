@@ -3,9 +3,10 @@
 {"id":2, "predecesor":0,"pregunta":"Mi vehículo ha sufrido un cortocircuito/recalentamiento"},
 {"id":3, "predecesor":0,"pregunta":"Mi vehículo no ha recibido mantenimiento en los últimos seis meses"},
 {"id":4, "predecesor":0,"pregunta":"Mi vehículo presenta fugas"},
+{"id":5, "predecesor":0,"pregunta":"Otro"},
 
 {"id":11, "predecesor":1,"pregunta":"¿Su vehículo se ha detenido?","valor_si":1},
-{"id":12, "predecesor":1,"pregunta":"¿Su chasis está desnivelado?"},
+{"id":12, "predecesor":1,"pregunta":"¿Su chasis (la estructura interna, el armazón del vehículo) está desnivelado?"},
 {"id":13, "predecesor":1,"pregunta":"¿Tiene problemas para direccionar su vehículo?"},
 {"id":14, "predecesor":1,"pregunta":"¿Tiene dificultades para realizar cambios de velocidad?"},
 {"id":15, "predecesor":1,"pregunta":"¿Tiene fugas del líquido de frenos?","valor_si":12},
@@ -27,7 +28,7 @@
 {"id":23, "predecesor":2,"pregunta":"¿Hay fugas de agua o aceite?","valor_si":16},
 {"id":24, "predecesor":2,"pregunta":"¿Hay fugas de petróleo?","valor_si":17},
 
-{"id":211, "predecesor":21,"pregunta":"¿La luz de alerta del alternador está encendida?","valor_si":[13], "valor_no":14},
+{"id":211, "predecesor":21,"pregunta":"¿La luz de alerta del alternador está encendida?","valor_si":13, "valor_no":14},
 
 {"id":31, "predecesor":3,"pregunta":"¿Tiene problemas con la batería del vehículo?"},
 {"id":32, "predecesor":3,"pregunta":"¿Tiene problemas para frenar el vehículo?"},
@@ -55,8 +56,8 @@
 
 {"id":41, "predecesor":4,"pregunta":"¿Su vehículo presenta fugas de agua?","valor_si":36},					
 {"id":42, "predecesor":4,"pregunta":"¿Su vehículo presenta fugas de aceite?","valor_si":36},					
-{"id":43, "predecesor":4,"pregunta":"¿Su vehículo presenta fugas de petróleo?","valor_si":37},					
+{"id":43, "predecesor":4,"pregunta":"¿Su vehículo presenta fugas de combustible?","valor_si":37},					
 {"id":44, "predecesor":4,"pregunta":"¿Su vehículo presenta fugas de líquido de frenos?","valor_si":38},					
-{"id":45, "predecesor":4,"pregunta":"¿Su vehículo presenta fugas de otro tipo?","valor_si":38}			
+{"id":45, "predecesor":4,"pregunta":"¿Su vehículo presenta fugas de otro tipo?","valor_si":999}			
 
 ]

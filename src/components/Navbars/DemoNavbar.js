@@ -50,7 +50,7 @@ class DemoNavbar extends React.Component {
       <>
         <header className="header-global">
           <Navbar
-            className="navbar-main navbar-transparent navbar-light headroom"
+            className="navbar-main navbar-transparent navbar-light headroom pt-4"
             expand="lg"
             id="navbar-main"
           >
@@ -89,13 +89,6 @@ class DemoNavbar extends React.Component {
                     </Col>
                   </Row>
                 </div>
-                <Nav className="align-items-lg-center ml-lg-auto" navbar>
-                <NavItem>
-                  <NavLink href="#pablo" onClick={e => e.preventDefault()}>
-                    Iniciar Sesión <span className="sr-only">(current)</span>
-                  </NavLink>
-                </NavItem>
-                </Nav>
               </UncontrolledCollapse>
             </Container>
           </Navbar>

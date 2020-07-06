@@ -1,6 +1,6 @@
 
 import React from "react";
-import ReactDOM from "react-dom";
+import {render} from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import "assets/vendor/nucleo/css/nucleo.css";
@@ -13,45 +13,80 @@ import Ubicacion from "views/examples/Ubicacion.js";
 import Reporte from "views/examples/Reporte.js";
 import Auxilio from "views/examples/Auxilio.js";
 
+import {
+  Container
+} from "reactstrap";
+
+import DemoNavbar from "components/Navbars/DemoNavbar.js";
+
 //<Redirect to="/" />
-ReactDOM.render(
-  <BrowserRouter>
-    <Switch>
-    
-      <Route path="/" exact render={props => <Inicio {...props} />} />
+class App extends React.Component{
+  componentDidMount() {
+    document.documentElement.scrollTop = 0;
+    document.scrollingElement.scrollTop = 0;
+    this.refs.main.scrollTop = 0;
+  }
 
-      <Route
-        path="/inicio"
-        exact
-        render={props => <Inicio {...props} />}
-      />
+  render(){
+    return(
+      <BrowserRouter>
+        <DemoNavbar />
+        <main ref="main">
+          <div className="position-relative"  >
+            <section className="section section-lg section-shaped" style={{"minHeight": 100+"vh"}}>
+            <div className="shape shape-style-1 bg-default ">
+            <img
+              alt="..."
+              className="img-center "
+              src={require("assets/img/brand/background-index.jpeg")}
+              style={{"opacity": 0.3}}
+            />
+            </div>
+              <Container className="align-items-center">
+                <Switch>
+                      <Route path="/" exact render={props => <Inicio {...props} />} />
 
-      <Route
-        path="/ubicacion"
-        exact
-        render={props => <Ubicacion {...props} />}
-      />
+                      <Route
+                        path="/inicio"
+                        exact
+                        render={props => <Inicio {...props} />}
+                      />
 
-      <Route
-        path="/asistencia-vehicular"
-        exact
-        render={props => <Asistencia {...props} />}
-      />
+                      <Route
+                        path="/ubicacion"
+                        exact
+                        render={props => <Ubicacion {...props} />}
+                      />
 
-      <Route
-        path="/reporte-diagnostico"
-        exact
-        render={props => <Reporte {...props} />}
-      />
+                      <Route
+                        path="/asistencia-vehicular"
+                        exact
+                        render={props => <Asistencia {...props} />}
+                      />
 
-      <Route
-        path="/solicitud-auxilio"
-        exact
-        render={props => <Auxilio {...props} />}
-      />
-      <Redirect to="/" />
-      
-    </Switch>
-  </BrowserRouter>,
-  document.getElementById("root")
-);
+                      <Route
+                        path="/reporte-diagnostico"
+                        exact
+                        render={props => <Reporte {...props} />}
+                      />
+
+                      <Route
+                        path="/solicitud-auxilio"
+                        exact
+                        render={props => <Auxilio {...props} />}
+                      />
+
+                      <Redirect to="/" />
+
+                      </Switch>  
+              </Container>
+            </section>
+          </div>
+        </main>
+      </BrowserRouter>
+    );
+  }
+}
+
+
+render(<App />, document.getElementById("root"));

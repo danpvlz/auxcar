@@ -17,6 +17,7 @@ class Opcion extends React.Component {
           type="radio"
           value="si"
           onClick={this.props.onClick}
+          defaultChecked={this.props.rbValor && this.props.seleccionados.includes(this.props.pregunta.id) ? true : false}
         />
         <label className="custom-control-label" htmlFor="customRadio2">
           <span>Sí</span>
@@ -24,6 +25,7 @@ class Opcion extends React.Component {
       </div>
         <div className="custom-control custom-radio mb-3">
             <input
+            defaultChecked={!this.props.rbValor && this.props.seleccionados.includes(this.props.pregunta.id) ? true : false}
             onClick={this.props.onClick}
             className="custom-control-input"
             id="customRadio1"

@@ -4,54 +4,79 @@ import {Link} from 'react-router-dom';
 import {
     Card,
     CardBody,
-    CardFooter,
+    Col,
     Button
 } from 'reactstrap'
 import BotonAsistencia from "./BotonAsistencia";
-import Animate from "animate.css";
 
 class ResultadoEncuesta extends React.Component {
   render() {
-    var gradiente = "bg-gradient-success";
+    var gradiente = "bg-success align-items-center";
     var icono = "ni ni-like-2 ni-3x";
     var titulo = "Su reporte está listo";
-    var clase = "animate__animated animate__slideInDown animate__fast";
+    var clase = "align-items-center mt-4 animate__animated animate__slideInDown animate__fast";
     if(this.props.estado===0){
-      gradiente = "bg-gradient-danger";
+      gradiente = "bg-danger align-items-center";
       icono = "fa fa-exclamation-triangle fa-3x";
       titulo = "No se puede determinar!";
-      clase = "animate__animated animate__flipInX animate__fast";
+      clase = "align-items-center mt-4 animate__animated animate__flipInX animate__fast";
     }
     
     return (
-      <div className={clase}>
-        <Card className={gradiente} sm="6">
+      <Col className={clase} sm="5">
+        <Card className={gradiente}> 
             <CardBody className="text-white">
                 <div className="py-3 text-center">
                 <i className={icono} />
                 <p className="heading mt-5">{titulo}</p>  
                 </div>
-            </CardBody>
-            <CardFooter className={gradiente}>
-                <Button
-                className="text-white ml-auto"
-                color="link"
-                type="button"
-                to="/"
-                tag={Link}
-                >
-                Cerrar
+                {
+                  this.props.estado===0 ? 
+                  <Button
+                  className="text-danger"
+                  color="neutral"
+                  type="button"
+                  block
+                  to={
+                    {
+                      pathname: "/reporte-diagnostico",
+                      fallas_identificadas: [999],
+                      asistenciaPrecio: this.props.asistenciaPrecio,
+                      asistenciaDistrito: this.props.asistenciaDistrito,
+                      codDistrito: this.props.codDistrito
+                    }
+                  }
+                  tag={Link}
+                  >
+                  Pedir auxilio
                 </Button>
-                <BotonAsistencia 
-                formatearData={this.props.formatearData}
-                tipo={this.props.estado} 
-                fallas_identificadas={this.props.fallas_identificadas} 
-                asistenciaDistrito={this.props.asistenciaDistrito} 
-                asistenciaPrecio={this.props.asistenciaPrecio} 
-                codDistrito={this.props.codDistrito}/>
-            </CardFooter>
+                :
+                ""
+                }
+                </CardBody>
+                
+                <div className="modal-footer">
+                <div className="btn-wraper">
+                    <Button
+                    className="text-white"
+                    color="link"
+                    type="button"
+                    to="/"
+                    tag={Link}
+                    >
+                    Cerrar
+                  </Button>
+                  <BotonAsistencia 
+                  formatearData={this.props.formatearData}
+                  tipo={this.props.estado} 
+                  fallas_identificadas={this.props.fallas_identificadas} 
+                  asistenciaDistrito={this.props.asistenciaDistrito} 
+                  asistenciaPrecio={this.props.asistenciaPrecio} 
+                  codDistrito={this.props.codDistrito}/>
+                  </div>
+                </div>
         </Card>
-      </div>
+      </Col>
     );
   }
 }

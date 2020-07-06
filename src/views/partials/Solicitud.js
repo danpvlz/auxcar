@@ -8,9 +8,10 @@ import {
   CardBody,
   CardFooter,
   FormGroup,
-  Col
+  Col,
+  UncontrolledAlert
 } from 'reactstrap';
-import Animate from 'animate.css'
+
 import {TextField,InputAdornment} from '@material-ui/core';
 import NumberFormat from 'react-number-format';
 class Solicitud extends React.Component {
@@ -18,6 +19,14 @@ class Solicitud extends React.Component {
     var animacion = this.props.animar ? "shadow shadow-lg--hover animate__animated animate__slideOutUp animate__fast" : "shadow shadow-lg--hover animate__animated animate__fadeInUp";
     return (
       <Col lg="6">
+        <UncontrolledAlert color="warning" fade={true} isOpen={this.props.showError} onClick={this.props.alertState} className="animate__animated animate__slideInDown">
+          <span className="alert-inner--icon">
+            <i className="ni ni-bell-55" />
+          </span>
+          <span className="alert-inner--text ml-1">
+            <strong>Alerta!</strong> {this.props.mensajeError}
+          </span>
+        </UncontrolledAlert>
         <Card className={animacion}>
               <form >
               <CardHeader >
@@ -61,7 +70,7 @@ class Solicitud extends React.Component {
               </div>
               <FormGroup className="mt-2">
               <small>Ubicación</small>
-              <iframe id="mapa" src={this.props.src} width="100%" height="300" style={{border:0+"px"}} aria-hidden="false"></iframe>                        
+              <iframe title="mapa" id="mapa" src={this.props.src} width="100%" height="300" style={{border:0+"px"}} aria-hidden="false"></iframe>                        
               </FormGroup>
               <FormGroup>
                   <TextField  InputProps={{

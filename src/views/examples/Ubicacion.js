@@ -45,12 +45,6 @@ class Ubicacion extends React.Component {
     }
   }
 
-  componentDidMount() {
-        document.documentElement.scrollTop = 0;
-        document.scrollingElement.scrollTop = 0;
-        this.refs.main.scrollTop = 0;
-}
-
   
   render() {
     const provincias = [
@@ -61,79 +55,88 @@ class Ubicacion extends React.Component {
       
     return (
         <>
-          <DemoNavbar />
-          <main ref="main" >
-            <div className="position-relative">
-            <section className="section section-lg bg-gradient-default">
-            <Container className="mt-3">
-              <Row className="row-grid align-items-center">
-                <Col className="order-md-2" md="6">
-                  <img
-                    alt="..."
-                    className="img-fluid floating"
-                    src={require("assets/img/theme/location.png")}
-                  />
-                </Col>
-                <Col className="order-md-1" md="6">
-                  <div className="pr-md-5">
-                    <h3 className="display-3 text-white">Motriztente</h3>
-                    <p className="text-white">
-                    ¿Dónde te encuentras?
-                    </p>
-                    <form action="">
-                    <div className="mt-5">
-                        <Select options={provincias}
-                          onChange={this.handleProvinciaChange}
-                          label="Single select"
-                          placeholder="Provincia"
-                          onFocus={e => this.setState({ searchAltFocused: true })}
-                          onBlur={e => this.setState({ searchAltFocused: false })}
-                          theme={theme => ({
-                            ...theme,
-                            colors: {
-                              ...theme.colors,
-                              primary: '#1aae6fc7',
-                            },
-                          })}
-                          />
-                      
-                    </div>
-                    <div className="mt-3" >
-                      <Select options={this.state.distritos}
-                        onChange={this.handleChange}
-                        placeholder="Distrito"
-                        onFocus={e => this.setState({ searchAltFocused: true })}
-                        onBlur={e => this.setState({ searchAltFocused: false })}
-                        theme={theme => ({
-                          ...theme,
-                          colors: {
-                            ...theme.colors,
-                            primary: '#1aae6fc7',
-                          },
-                        })}
-                        />
-                    </div>
-                    <div className="mt-4">
-                    <Button
-                          outline  type="button"
-                          color="success"
-                          onClick={this.handleClick}
-                        >
-                          <span className="btn-inner--text">
-                            Seguir
-                          </span>
-                        </Button>
-                        
-                    </div>
-                    </form>
+          <Row className="align-items-center animate__animated animate__fadeIn">
+            <Col className="order-md-2 " md="6">
+              <img
+                alt="..."
+                className="img-fluid floating"
+                src={require("assets/img/theme/location.png")}
+              />
+            </Col>
+            <Col className="order-md-1 " md="6">
+              <div className="pr-md-5">
+                <div>
+                <h3 className="display-3 text-white mb-0">Motriztente</h3>
+                <div>
+                  <div className="icon icon-sm icon-shape">
+                    <i className="ni ni-settings text-white" />
                   </div>
-                </Col>
-              </Row>
-            </Container>
-          </section>
-          </div>
-          <SimpleFooter />
-          </main>
+                  <div className="icon icon-sm icon-shape">
+                    <i className="ni ni-delivery-fast text-white" />
+                  </div>
+                  <div className="icon icon-sm icon-shape">
+                    <i className="ni ni-compass-04 text-white" />
+                  </div>
+                  <div className="icon icon-sm icon-shape">
+                    <i className="ni ni-bus-front-12 text-white" />
+                  </div>
+                  <div className="icon icon-sm icon-shape">
+                    <i className="ni ni-square-pin text-white" />
+                  </div>
+                </div>
+                <p className="text-white">
+                ¿Dónde te encuentras?
+                </p>
+                </div>
+                <form action="" className="">
+                <div className="mt-5">
+                    <Select options={provincias}
+                      onChange={this.handleProvinciaChange}
+                      label="Single select"
+                      placeholder="Provincia"
+                      onFocus={e => this.setState({ searchAltFocused: true })}
+                      onBlur={e => this.setState({ searchAltFocused: false })}
+                      theme={theme => ({
+                        ...theme,
+                        colors: {
+                          ...theme.colors,
+                          primary: '#1aae6fc7',
+                        },
+                      })}
+                      />
+                  
+                </div>
+                <div className="mt-3" >
+                  <Select options={this.state.distritos}
+                    onChange={this.handleChange}
+                    placeholder="Distrito"
+                    onFocus={e => this.setState({ searchAltFocused: true })}
+                    onBlur={e => this.setState({ searchAltFocused: false })}
+                    theme={theme => ({
+                      ...theme,
+                      colors: {
+                        ...theme.colors,
+                        primary: '#1aae6fc7',
+                      },
+                    })}
+                    />
+                </div>
+                <div className="mt-4">
+                <Button
+                      outline  type="button"
+                      color="success"
+                      onClick={this.handleClick}
+                    >
+                      <span className="btn-inner--text">
+                        Seguir
+                      </span>
+                    </Button>
+                    
+                </div>
+                </form>
+              </div>
+            </Col>
+          </Row>
         </>
       );
   }

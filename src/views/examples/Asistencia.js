@@ -2,18 +2,10 @@ import React from "react";
 
 // reactstrap components
 import {
-Container,
-Row,
-Col,
-Card,
-CardBody,
-CardFooter,
-Button
+Row
 } from "reactstrap";
 
 // core components
-import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import SimpleFooter from "components/Footers/SimpleFooter.js";
 import Encuesta from "../partials/Encuesta.js";
 import ResultadoEncuesta from "../partials/ResultadoEncuesta.js";
 import datos from '../../data/datos.json';
@@ -22,162 +14,151 @@ class Asistencia extends React.Component {
     constructor(){
         super();
         this.state = {
-            predecesor: [0],
             preguntas:[],
+            categorias: [],
             seleccionados: [0],
-            pendientes: [], //no desplegadas
-            descartados: [],
             identificados: [],
-            rbSelected: false,
-            mostrar: 0,
+            rbValor: true,
             animar: false,
-            history: [
-                {"seleccionados": []}
-            ],
+            historial: [{
+                preguntas:[],
+                seleccionados: [0],
+                identificados: [],
+                rbValor: true
+            }]
         }
     }
 
     formatearData=async()=>{
-       await this.setState({
-            predecesor: [0],
+        await this.setState({
             preguntas:[],
+            categorias: [],
             seleccionados: [0],
-            pendientes: [], //no desplegadas
-            descartados: [],
             identificados: [],
-            rbSelected: false,
-            mostrar: 0,
+            rbValor: true,
             animar: false,
-            history: [
-                {"seleccionados": []}
-            ],
+            historial: [{
+                preguntas:[],
+                seleccionados: [0],
+                identificados: [],
+                rbValor: true
+            }]
         });
         this.cargarPreguntas();
     }
 
     cargarPreguntas=()=>{
-        var hijos=[];
-        var pendientes = this.state.pendientes;
-        pendientes = pendientes.concat(this.state.seleccionados);
-        var preguntas_mostrar=[];
-        
-        datos.map((preg)=> 
-        {
-            if( this.state.seleccionados.includes(preg.predecesor) && !this.state.descartados.includes(preg.id) && !this.state.identificados.includes(preg.id)){
-                if(this.state.predecesor.includes(0)){
-                preguntas_mostrar.push(preg); }
-                if(!pendientes.includes(preg.id)) hijos.push(preg.id);
+        var seleccionados = this.state.seleccionados.slice();
+        var identificados = this.state.identificados.slice();
+        var preguntas_mostrar= seleccionados[0]!=0 ? this.state.preguntas.slice().filter(p=>p.id!=seleccionados[0] && p.predecesor!=0) : [];
+        let preguntas_hijas = [];
+
+        seleccionados.map(seleccionado=>{
+            let respuesta = datos.filter(pregunta=>
+                pregunta.predecesor==seleccionado && this.state.rbValor
+            );
+            preguntas_hijas = preguntas_hijas.concat(respuesta);
+
+            if(respuesta.length==0 ){
+                let pregunta = datos.find(pregunta=>pregunta.id==seleccionado);
+                if(this.state.rbValor && pregunta.valor_si!=undefined) identificados.push(pregunta.valor_si);
+                if(!this.state.rbValor && pregunta.valor_no) identificados.push(pregunta.valor_no);
             }
-        }
-        );
-        pendientes=hijos.sort().concat(pendientes).filter(val=> !this.state.seleccionados.includes(val));
-        if(pendientes.length>0) if(!this.state.predecesor.includes(0)) preguntas_mostrar = [datos.find(p=>p.id==pendientes[0])];
+        });
+        preguntas_mostrar = preguntas_hijas.concat(preguntas_mostrar);
         
         if(preguntas_mostrar.length==0){
-            this.setState({animar:true});document.documentElement.scrollTop = 0;
-            document.scrollingElement.scrollTop = 0;
-            this.refs.main.scrollTop = 0;
-            setTimeout(()=>{this.state.predecesor==0 ? this.setState({preguntas: preguntas_mostrar,seleccionados:[]}) : this.setState({preguntas: preguntas_mostrar,seleccionados:[],pendientes:  pendientes});
+            this.setState({animar:true});
+            window.scrollTo(0, 0);
+            setTimeout(()=>{
+                this.setState({identificados: identificados, preguntas: preguntas_mostrar, seleccionados: []});
             }, 500);
         }else{
-            this.state.predecesor==0 ? this.setState({preguntas: preguntas_mostrar,seleccionados:[]}) : this.setState({preguntas: preguntas_mostrar,seleccionados:[],pendientes:  pendientes});
+            this.setState({identificados: identificados, preguntas: preguntas_mostrar, seleccionados: []});
         }
-
-        /*if(pendientes.length>0 && preguntas_mostrar.length==0){
-            var identificados = this.state.identificados;
-            identificados=identificados.concat(this.state.predecesor);
-            this.setState({identificados: identificados});
-            //console.log(identificados);
-        }*/
     }
 
     handleChecked=(e)=>{
-        var seleccionados = this.state.seleccionados;
+        var seleccionados = this.state.seleccionados.slice();
         if(e.target.checked){
             seleccionados.push(parseInt(e.target.value))
         }else{
             seleccionados=seleccionados.filter(val=>val!=e.target.value);
         }
-        this.setState({seleccionados: seleccionados.sort(),predecesor: [seleccionados[0]]});
+        this.setState({seleccionados: seleccionados.sort(), categorias: seleccionados.sort()});
     }
 
     handleRadioButton=(e)=>{
-        var seleccionados = this.state.seleccionados;
-        var pendientes = this.state.pendientes;
-        var descartados = this.state.descartados;
-        var rbSelected = false;
-        if(!descartados.includes(parseInt((e.target.name)))) descartados.push(parseInt(e.target.name));
+        var seleccionados = [parseInt(e.target.name)];
+        var rbValor = false;
         if(e.target.value=="si"){
-            seleccionados.splice(0,seleccionados.length,parseInt(e.target.name))
-            if (!pendientes.includes(parseInt(e.target.name))) pendientes.splice(0,0,parseInt(e.target.name))
-            rbSelected = true;
+            rbValor = true;
         }else{
-            seleccionados.push(parseInt(pendientes[1]));
-            seleccionados=seleccionados.filter(val=>val!=(e.target.name));
-            pendientes.splice(0,1);
-            seleccionados=[this.state.preguntas.filter((preg) => preg.id == e.target.name)[0].predecesor];
-            rbSelected=false;
+            rbValor=false;
         }
-        this.setState({seleccionados: seleccionados.sort(),predecesor: [seleccionados[0]],descartados:descartados, rbSelected: rbSelected});
+        this.setState({seleccionados: seleccionados, rbValor: rbValor});
     }
 
-    handleNext= (e) =>{
-        if(this.state.seleccionados.length>0){   
-            //HISTORIAL
-            var seleccionados = this.state.seleccionados; 
-            var historia = this.state.history;
-            historia.push({"seleccionados":seleccionados});
-            this.setState({history: historia});  
-
-            //PREGUNTAS SIN HIJOS Y MARCADAS CON SÍ
-            var ultimo_descartado = this.state.descartados[this.state.descartados.length-1];
-            var verificar_tope = datos.filter(d=>d.predecesor==ultimo_descartado);
-            var identificados = this.state.identificados;
-
-            if(verificar_tope.length==0 && !identificados.includes(ultimo_descartado)){ //NO HAY HIJOS
-                var pregunta = datos.find(f=>f.id==ultimo_descartado);
-                if(pregunta!= undefined){
-                    if(this.state.rbSelected){
-                        //MARCÓ SÍ
-                        if(pregunta.valor_si != undefined ) {identificados.push(pregunta.valor_si)}
-                    }else{
-                        //MARCÓ NO
-                        if(pregunta.valor_no != undefined ) {identificados.push(pregunta.valor_no)}
-                    }
-                    
-                }    
-            }
-        this.cargarPreguntas();
-           
-    }
-}
-    
-    handleBack=()=>{
-       /* var historial = this.state.history;
-        if(historial.length>1){        
-        historial = historial.slice(0,historial.length-1);
-        const nuevos_seleccionados = historial[historial.length-1].seleccionados;
-        this.setState({seleccionados: nuevos_seleccionados, history: historial});
-       
-            console.log("splice");
-            console.log(historial); 
-            console.log("seleccionados");
-            console.log(nuevos_seleccionados); 
+    handleNext=()=>{
+        if(this.state.seleccionados.length>0){          
+            let historial = this.state.historial.slice();
+            historial.push(this.getEstadoApp());
+            this.setState({historial: historial});
             this.cargarPreguntas();
-            this.getFallasIdentificadas();
-        }*/
-        
-        console.log("identificados...");
-        console.log(this.state.identificados.toString());
-        console.log("descartados...");
-        console.log(this.state.descartados);
+        }
+    }
+    
+    getEstadoApp=()=>{
+        var estadoapp = {
+            preguntas: this.state.preguntas.slice(),
+            seleccionados: this.state.seleccionados.slice(),
+            identificados: this.state.identificados.slice(),
+            categorias: this.state.categorias.slice(),
+            rbValor: this.state.rbValor
+        };
+        return estadoapp;
+    }
+
+    handleBack=()=>{
+        var historial = this.state.historial.slice();
+        this.setState({
+            preguntas:historial[historial.length-1].preguntas,
+            seleccionados:historial[historial.length-1].seleccionados,
+            identificados:historial[historial.length-1].identificados,
+            rbValor:historial[historial.length-1].rbValor,
+            categorias: historial[historial.length-1].categorias,
+            historial: historial.slice(0,historial.length-1)
+        });
+    }
+
+    comprobarIndeterminadas=()=>{
+        let valores_cat = [
+            {cat:1,min:1,max:12},
+            {cat:2,min:13,max:17},
+            {cat:3,min:18,max:35},
+            {cat:4,min:36,max:38}
+        ];
+        let identificados = this.state.identificados.slice();
+        if(identificados.length>0){
+            let coincide = [];
+            let nuevos = [];
+            valores_cat = valores_cat.filter(vc=>this.state.categorias.includes(vc.cat));
+            valores_cat.map(vc=>{
+                coincide = identificados.filter(i=>i>=vc.min && i<=vc.max);
+                if(coincide.length==0) nuevos.push(999);
+            });
+            identificados = identificados.concat(nuevos);
+        }
+        this.setState({animar:true});
+        window.scrollTo(0, 0);
+        setTimeout(()=>{
+            this.setState({identificados: identificados, preguntas: [], seleccionados: []});
+        }, 500);
     }
 
     componentDidMount() {
         if(this.props.location.asistenciaPrecio!=undefined){
-            document.documentElement.scrollTop = 0;
-            document.scrollingElement.scrollTop = 0;
-            this.refs.main.scrollTop = 0;
+            window.scrollTo(0, 0);
             this.cargarPreguntas();
         }else{
             this.props.history.push('/');
@@ -187,56 +168,24 @@ class Asistencia extends React.Component {
   render() {
     return (
       <>
-        <DemoNavbar />
-        <main ref="main">
-          <section className="section section-shaped section-lg">
-            <div className="shape shape-style-1 bg-gradient-default">
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-            </div>
-            <Container className="pt-lg-5">
-              <Row className="justify-content-md-center">
-                <Col className="justify-content-center" sm="6" style={{display: 'flex'}}>
-                    {
-                    this.state.preguntas.length > 0 ? 
-                    <Encuesta estado={this.state.identificados.length} animar={this.state.animar} handleBack={this.handleBack} handleNext={this.handleNext} preguntas={this.state.preguntas} onCheckbox={this.handleChecked} onRadioButton={this.handleRadioButton}  />
-                    :
-                    <ResultadoEncuesta 
-                    formatearData={this.formatearData}
-                    estado={this.state.identificados.length}
-                    fallas_identificadas={this.state.identificados}
-                    asistenciaPrecio={this.props.location.asistenciaPrecio}
-                    asistenciaDistrito={this.props.location.asistenciaDistrito}
-                    codDistrito={this.props.location.codDistrito}
-                    />
-                    }
-                </Col>
-              </Row>
-            </Container>
-          </section>
-        </main>
-        <SimpleFooter />
+        <Row className="align-items-center justify-content-center mt-5">
+        {
+            this.state.preguntas.length > 0 ? 
+            <Encuesta rbValor={this.state.rbValor} terminar={this.comprobarIndeterminadas} seleccionados={this.state.seleccionados} estado={this.state.identificados.length} animar={this.state.animar} handleBack={this.handleBack} handleNext={this.handleNext} preguntas={this.state.preguntas} onCheckbox={this.handleChecked} onRadioButton={this.handleRadioButton}  />
+            :
+            <ResultadoEncuesta 
+                formatearData={this.formatearData}
+                estado={this.state.identificados.length}
+                fallas_identificadas={this.state.identificados}
+                asistenciaPrecio={this.props.location.asistenciaPrecio}
+                asistenciaDistrito={this.props.location.asistenciaDistrito}
+                codDistrito={this.props.location.codDistrito}
+            />
+        }
+        </Row>
       </>
     );
   }
 }
 
 export default Asistencia;
-
-/*
-    <Badge className="text-uppercase" color="danger" pill>
-        Danger
-    </Badge>
-
-
-
-
-
-            
-*/

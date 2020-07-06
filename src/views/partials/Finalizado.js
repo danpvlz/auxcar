@@ -8,7 +8,6 @@ import {
     Button,
     Col
 } from 'reactstrap'
-import Animate from "animate.css";
 
 class Finalizado extends React.Component {
   render() {

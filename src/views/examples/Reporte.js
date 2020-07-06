@@ -25,14 +25,15 @@ class Reporte extends React.Component {
 
   componentDidMount(){
     if(this.props.location.fallas_identificadas!=undefined){
-      this.init();
+     this.init();
     }else{
       this.props.history.push('/inicio');
     }
   }
-  
+  //https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/auxilio
+  //https://apiservicio.herokuapp.com/api/fallas-vehiculares
   init=async()=>{
-    let response = await fetch(`https://apiservicio.herokuapp.com/api/fallas-vehiculares`, {
+    let response = await fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/fallas-vehiculares`, {
       method: 'POST',
       body: `{
         "fallas": [${this.props.location.fallas_identificadas.toString()}]
@@ -41,11 +42,13 @@ class Reporte extends React.Component {
         'Content-Type': 'application/json'
       }
     });
+
     let data = await response.json();
     let reparacion=0.0;
     data.map(falla=>{
       reparacion+=falla.costo;
     });
+    
     this.setState({
       asistenciaPrecio: this.props.location.asistenciaPrecio,
       reparacion: reparacion,
@@ -53,24 +56,15 @@ class Reporte extends React.Component {
       fallas: data
     });
   }
-
-  handleClick = ()=>{
-    console.log(this.props.location.asistenciaPrecio);
-    //console.log(this.props.location.fallas_identificadas);
-  }
   
   render() {
       //section section-lg
       //section section-lg bg-gradient-default
     return (
         <>
-          <DemoNavbar />
-          <main ref="main">
-            <section className="section bg-gradient-success">
-            <Container className="pt-lg-4 mb-4">
             <Row className="justify-content-center mt-4 ">
               <Col className="text-center mb-4 animate__animated animate__fadeInDown" sm="12">
-                <h2 className="display-3 text-white">Reporte de Motriztente</h2>
+                <h2 className="display-3 text-white">Reporte de diagnóstico vehicular</h2>
                 <p className="text-white">
                   El diagnóstico es el siguiente:   
                 </p>
@@ -84,16 +78,27 @@ class Reporte extends React.Component {
                               <tr>
                                   <th className="h6">Falla</th>
                                   <th className="h6">Costo de reparación</th>
-                                  <th className="h6">Causa</th>
+                                  <th className="h6">Causa probable</th>
                               </tr>
                               </thead>
                               <tbody className="table-borderless  description mt-3">
-                              {this.state.fallas.map((falla)=>{
-                                return(<tr>
+                              {
+                              this.state.fallas.map((falla, i)=>{
+                                if(falla.costo!=0){
+                                return(
+                                <tr key={i+"_tr"}>
                                   <td>{falla.descripcion}</td>
                                   <td>S/.{falla.costo}</td>
                                   <td>{falla.causa}</td>
                                 </tr>);
+                                }else{
+                                  return(
+                                    <tr key={i+"_tr"} className="text-danger">
+                                      <td><strong>{falla.descripcion}</strong></td>
+                                      <td><strong>Pendiente</strong></td>
+                                      <td><strong>{falla.causa}</strong></td>
+                                    </tr>);
+                                }
                               })}
                               </tbody>
                           </table>
@@ -108,7 +113,8 @@ class Reporte extends React.Component {
                       <div className="col"><h5 className="mt-3">Reparación</h5></div>
                         <div className="col text-right">
                           <p className="mt-3">
-                            S/.{this.state.reparacion}
+                            {this.state.reparacion==0 ? "Pendiente" : `S/.${this.state.reparacion}`}
+                            
                           </p>
                         </div>
                       </div>
@@ -127,8 +133,11 @@ class Reporte extends React.Component {
                         </p></div>
                       </div>
                       <div className="row">
-                        <Col className="text-center">
-                        <small>(*) El subtotal no considera el costo de repuestos nuevos, en caso se requiera</small>
+                        <Col className="text-left" sm="12">
+                        <small>(*) Los costos por asistencia varían por la distancia a recorrer por el mecánico.</small>
+                        </Col>
+                        <Col className="text-left" sm="12">
+                        <small>(**)El subtotal no considera el costo de repuestos nuevos, en caso se requiera.</small>
                         </Col>
                       </div>
                   </CardBody>
@@ -158,10 +167,7 @@ class Reporte extends React.Component {
                 </div>
               </Col>
               </Row>
-            </Container>
-          </section>
-          <SimpleFooter />
-          </main>
+
         </>
       );
   }
