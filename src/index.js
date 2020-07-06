@@ -33,17 +33,19 @@ class App extends React.Component{
     return(
       <HashRouter hashType="noslash">
         <DemoNavbar />
-        <main ref="main">
+        <main ref="main" >
+          
           <div className="position-relative"  >
-            <section className="section section-lg section-shaped" style={{"minHeight": 100+"vh"}}>
-            <div className="shape shape-style-1 bg-default ">
+          <div className="shape shape-style-1 bg-default position-fixed" style={{"zIndex": -1}}>
             <img
               alt="..."
               className="img-center "
               src={require("assets/img/brand/background-index.jpeg")}
               style={{"opacity": 0.3}}
             />
-            </div>
+          </div>
+            <section className="section section-lg section-shaped position-relative" >
+            
               <Container className="align-items-center">
                   
                 <Switch>
