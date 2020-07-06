@@ -1,7 +1,7 @@
 
 import React from "react";
 import {render} from "react-dom";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect, Router } from "react-router-dom";
 
 import "assets/vendor/nucleo/css/nucleo.css";
 import "animate.css";
@@ -31,7 +31,7 @@ class App extends React.Component{
 
   render(){
     return(
-      <BrowserRouter>
+      <BrowserRouter basename="/motriztente">
         <DemoNavbar />
         <main ref="main">
           <div className="position-relative"  >
@@ -45,6 +45,7 @@ class App extends React.Component{
             />
             </div>
               <Container className="align-items-center">
+                  
                 <Switch>
                       <Route path="/" exact render={props => <Inicio {...props} />} />
 

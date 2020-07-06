@@ -6,5 +6,6 @@
 ## Empezar
 
 - Clonar repo: `git clone https://github.com/danpvlz/motriztente.git`
+- Entrar al proyecto: `cd motriztente`
 - Dependencias: `npm i`
 - Ejecutar: `npm start`

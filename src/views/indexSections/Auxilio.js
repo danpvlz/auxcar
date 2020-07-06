@@ -28,6 +28,7 @@ class Auxilio extends React.Component {
     
   componentDidMount() {
     if(this.props.location.codDistrito!=undefined){
+      window.scroll(0,0);
       this.getUbicacion();
     }else{
       this.props.history.push('/');
