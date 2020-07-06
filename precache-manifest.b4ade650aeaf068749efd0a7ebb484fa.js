@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ee065ac1375faa959b04fa723eedfe2a",
+    "revision": "ab8efed58f8b5fe8eab0349085b8750b",
     "url": "/motriztente/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/motriztente/static/css/2.e2dd9b0a.chunk.css"
   },
   {
-    "revision": "740ac45c7d9af58f390f",
+    "revision": "f8a96dd28442b9949a42",
     "url": "/motriztente/static/css/main.c5674f18.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/motriztente/static/js/2.a120c01b.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "740ac45c7d9af58f390f",
-    "url": "/motriztente/static/js/main.cfc5f14d.chunk.js"
+    "revision": "f8a96dd28442b9949a42",
+    "url": "/motriztente/static/js/main.db22f2db.chunk.js"
   },
   {
     "revision": "7505acb3274d7c4258c7",
