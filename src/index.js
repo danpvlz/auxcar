@@ -1,7 +1,7 @@
 
 import React from "react";
 import {render} from "react-dom";
-import { BrowserRouter, Route, Switch, Redirect, Router } from "react-router-dom";
+import { Route, Switch, Redirect, HashRouter } from "react-router-dom";
 
 import "assets/vendor/nucleo/css/nucleo.css";
 import "animate.css";
@@ -31,7 +31,7 @@ class App extends React.Component{
 
   render(){
     return(
-      <BrowserRouter basename="/motriztente">
+      <HashRouter hashType="noslash">
         <DemoNavbar />
         <main ref="main">
           <div className="position-relative"  >
@@ -86,7 +86,7 @@ class App extends React.Component{
             </section>
           </div>
         </main>
-      </BrowserRouter>
+      </HashRouter>
     );
   }
 }

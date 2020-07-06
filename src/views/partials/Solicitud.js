@@ -45,7 +45,7 @@ class Solicitud extends React.Component {
                     fullWidth id="txtCliente" label="Nombre completo"/>
               </FormGroup>
               <div className="row">
-                <div className="col-sm-6">
+                <div className="col-sm-6 mb-3">
                   <NumberFormat InputProps={{
                           startAdornment: <InputAdornment position="start">
                               <i className="fa fa-phone "></i>
@@ -54,7 +54,7 @@ class Solicitud extends React.Component {
                         onChange={this.props.handleChange}
                         id="txtContacto"
                         customInput={TextField} label="Número de contacto" format="+51 #########"/>
-                  </div>
+                </div>
                 <div className="col-sm-6">
                   <TextField
                   InputProps={{

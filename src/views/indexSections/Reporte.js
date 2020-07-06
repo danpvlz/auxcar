@@ -19,7 +19,6 @@ class Reporte extends React.Component {
 
   componentDidMount(){
     if(this.props.location.fallas_identificadas!=undefined){
-      console.log(this.props.location.fallas_identificadas);
      this.init();
     }else{
       this.props.history.push('/inicio');

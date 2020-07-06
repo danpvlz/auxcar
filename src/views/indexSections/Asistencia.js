@@ -152,7 +152,7 @@ class Asistencia extends React.Component {
         this.setState({animar:true});
         window.scrollTo(0, 0);
         setTimeout(()=>{
-            this.setState({identificados: identificados, preguntas: [], seleccionados: []});
+            this.setState({identificados: [...new Set(identificados)], preguntas: [], seleccionados: []});
         }, 500);
     }
 
