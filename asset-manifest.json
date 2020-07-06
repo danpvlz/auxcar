@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/motriztente/static/css/main.c5674f18.chunk.css",
-    "main.js": "/motriztente/static/js/main.5f993898.chunk.js",
-    "main.js.map": "/motriztente/static/js/main.5f993898.chunk.js.map",
+    "main.js": "/motriztente/static/js/main.cfc5f14d.chunk.js",
+    "main.js.map": "/motriztente/static/js/main.cfc5f14d.chunk.js.map",
     "runtime-main.js": "/motriztente/static/js/runtime-main.4d157149.js",
     "runtime-main.js.map": "/motriztente/static/js/runtime-main.4d157149.js.map",
     "static/css/2.e2dd9b0a.chunk.css": "/motriztente/static/css/2.e2dd9b0a.chunk.css",
     "static/js/2.a120c01b.chunk.js": "/motriztente/static/js/2.a120c01b.chunk.js",
     "static/js/2.a120c01b.chunk.js.map": "/motriztente/static/js/2.a120c01b.chunk.js.map",
     "index.html": "/motriztente/index.html",
-    "precache-manifest.95dc9a1573b2889ae8fad24f1a6d1646.js": "/motriztente/precache-manifest.95dc9a1573b2889ae8fad24f1a6d1646.js",
+    "precache-manifest.e3c8f31c94bedc493042b1fba54a766b.js": "/motriztente/precache-manifest.e3c8f31c94bedc493042b1fba54a766b.js",
     "service-worker.js": "/motriztente/service-worker.js",
     "static/css/2.e2dd9b0a.chunk.css.map": "/motriztente/static/css/2.e2dd9b0a.chunk.css.map",
     "static/css/main.c5674f18.chunk.css.map": "/motriztente/static/css/main.c5674f18.chunk.css.map",
@@ -26,6 +26,6 @@
     "static/css/2.e2dd9b0a.chunk.css",
     "static/js/2.a120c01b.chunk.js",
     "static/css/main.c5674f18.chunk.css",
-    "static/js/main.5f993898.chunk.js"
+    "static/js/main.cfc5f14d.chunk.js"
   ]
 }
