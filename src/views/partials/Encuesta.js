@@ -9,7 +9,6 @@ import {
     CardFooter,
     Button,
     Col,
-    ButtonGroup
 } from 'reactstrap'
 
 class Encuesta extends React.Component {

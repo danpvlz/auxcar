@@ -3,16 +3,11 @@ import distritos from '../../data/distritos.json';
 // reactstrap components
 import {
   Col,
-  Container,
   Row,
   Button
 } from "reactstrap";
 
 import Select from "react-select";
-
-// core components
-import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import SimpleFooter from "components/Footers/SimpleFooter.js";
 
 class Ubicacion extends React.Component {
   constructor(){

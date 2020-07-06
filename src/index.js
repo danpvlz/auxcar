@@ -4,20 +4,22 @@ import {render} from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import "assets/vendor/nucleo/css/nucleo.css";
+import "animate.css";
 import "assets/vendor/font-awesome/css/font-awesome.min.css";
 import "assets/scss/argon-design-system-react.scss?v1.1.0";
 
-import Inicio from "views/examples/Inicio.js";
-import Asistencia from "views/examples/Asistencia.js";
-import Ubicacion from "views/examples/Ubicacion.js";
-import Reporte from "views/examples/Reporte.js";
-import Auxilio from "views/examples/Auxilio.js";
+import Inicio from "views/indexSections/Inicio.js";
+import Asistencia from "views/indexSections/Asistencia.js";
+import Ubicacion from "views/indexSections/Ubicacion.js";
+import Reporte from "views/indexSections/Reporte.js";
+import Auxilio from "views/indexSections/Auxilio.js";
 
 import {
   Container
 } from "reactstrap";
 
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
+
 
 //<Redirect to="/" />
 class App extends React.Component{

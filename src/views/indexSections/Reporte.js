@@ -3,17 +3,11 @@ import { Link } from 'react-router-dom'
 // reactstrap components
 import {
   Col,
-  Container,
   Row,
   Card,
   CardBody,
   Button
 } from "reactstrap";
-
-// core components
-import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import SimpleFooter from "components/Footers/SimpleFooter.js";
-import Animate from "animate.css";
 
 class Reporte extends React.Component {
     state = {
@@ -25,13 +19,13 @@ class Reporte extends React.Component {
 
   componentDidMount(){
     if(this.props.location.fallas_identificadas!=undefined){
+      console.log(this.props.location.fallas_identificadas);
      this.init();
     }else{
       this.props.history.push('/inicio');
     }
   }
-  //https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/auxilio
-  //https://apiservicio.herokuapp.com/api/fallas-vehiculares
+  
   init=async()=>{
     let response = await fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/fallas-vehiculares`, {
       method: 'POST',
@@ -107,7 +101,7 @@ class Reporte extends React.Component {
                 </Card>
               </Col>
               <Col>
-                <Card className="shadow shadow-lg animate__animated animate__fadeInUp">
+                <Card className="mb-2 shadow shadow-lg animate__animated animate__fadeInUp">
                   <CardBody>
                     <div className="row">
                       <div className="col"><h5 className="mt-3">Reparación</h5></div>
@@ -142,24 +136,25 @@ class Reporte extends React.Component {
                       </div>
                   </CardBody>
                 </Card>
-                <div className="mt-4 text-center">
+                <div className="text-center">
                   <div className="btn-wrapper animate__animated animate__fadeInDown">
                     <Button
-                      className="btn-white mt-3 mt-md-0"
+                      className="btn-white mt-2"
                       to='/inicio'
                       tag={Link}
-                    >
+                      >
                       Cerrar reporte
                     </Button>
                     <Button
+                      className="mt-2"
                       color="success"
                       to={{pathname:'/solicitud-auxilio',
                       asistenciaDistrito:this.props.location.asistenciaDistrito,
                       codDistrito:this.props.location.codDistrito,
                       costo: this.state.subtotal,
                       fallas: this.props.location.fallas_identificadas
-                    }}
-                      tag={Link}
+                      }}
+                    tag={Link}
                     >
                       Solicitar mecánico
                     </Button>

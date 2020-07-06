@@ -7,7 +7,6 @@ import {
   Row,
   Col
 } from "reactstrap";
-
 // core components
 
 class Inicio extends React.Component {
