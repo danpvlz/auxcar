@@ -1,31 +1,31 @@
 {
   "files": {
     "main.css": "/motriztente/static/css/main.c5674f18.chunk.css",
-    "main.js": "/motriztente/static/js/main.db22f2db.chunk.js",
-    "main.js.map": "/motriztente/static/js/main.db22f2db.chunk.js.map",
+    "main.js": "/motriztente/static/js/main.ef885899.chunk.js",
+    "main.js.map": "/motriztente/static/js/main.ef885899.chunk.js.map",
     "runtime-main.js": "/motriztente/static/js/runtime-main.4d157149.js",
     "runtime-main.js.map": "/motriztente/static/js/runtime-main.4d157149.js.map",
     "static/css/2.e2dd9b0a.chunk.css": "/motriztente/static/css/2.e2dd9b0a.chunk.css",
-    "static/js/2.a120c01b.chunk.js": "/motriztente/static/js/2.a120c01b.chunk.js",
-    "static/js/2.a120c01b.chunk.js.map": "/motriztente/static/js/2.a120c01b.chunk.js.map",
+    "static/js/2.02594d78.chunk.js": "/motriztente/static/js/2.02594d78.chunk.js",
+    "static/js/2.02594d78.chunk.js.map": "/motriztente/static/js/2.02594d78.chunk.js.map",
     "index.html": "/motriztente/index.html",
-    "precache-manifest.b4ade650aeaf068749efd0a7ebb484fa.js": "/motriztente/precache-manifest.b4ade650aeaf068749efd0a7ebb484fa.js",
+    "precache-manifest.b48289d69658f98bb06f539c41811a9c.js": "/motriztente/precache-manifest.b48289d69658f98bb06f539c41811a9c.js",
     "service-worker.js": "/motriztente/service-worker.js",
     "static/css/2.e2dd9b0a.chunk.css.map": "/motriztente/static/css/2.e2dd9b0a.chunk.css.map",
     "static/css/main.c5674f18.chunk.css.map": "/motriztente/static/css/main.c5674f18.chunk.css.map",
-    "static/js/2.a120c01b.chunk.js.LICENSE.txt": "/motriztente/static/js/2.a120c01b.chunk.js.LICENSE.txt",
+    "static/js/2.02594d78.chunk.js.LICENSE.txt": "/motriztente/static/js/2.02594d78.chunk.js.LICENSE.txt",
+    "static/js/main.ef885899.chunk.js.LICENSE.txt": "/motriztente/static/js/main.ef885899.chunk.js.LICENSE.txt",
     "static/media/background-index.jpeg": "/motriztente/static/media/background-index.faab7a05.jpeg",
     "static/media/font-awesome.min.css": "/motriztente/static/media/fontawesome-webfont.fee66e71.woff",
     "static/media/location.png": "/motriztente/static/media/location.6ad69393.png",
     "static/media/logo-white.png": "/motriztente/static/media/logo-white.3110f9ee.png",
-    "static/media/logo.png": "/motriztente/static/media/logo.f38ddea9.png",
     "static/media/nucleo.css": "/motriztente/static/media/nucleo-icons.f82ec6ba.ttf"
   },
   "entrypoints": [
     "static/js/runtime-main.4d157149.js",
     "static/css/2.e2dd9b0a.chunk.css",
-    "static/js/2.a120c01b.chunk.js",
+    "static/js/2.02594d78.chunk.js",
     "static/css/main.c5674f18.chunk.css",
-    "static/js/main.db22f2db.chunk.js"
+    "static/js/main.ef885899.chunk.js"
   ]
 }
