@@ -70,7 +70,7 @@ class Solicitud extends React.Component {
               </div>
               <FormGroup className="mt-2">
               <small>Ubicación</small>
-              <iframe title="mapa" id="mapa" src={this.props.src} width="100%" height="300" style={{border:0+"px"}} aria-hidden="false"></iframe>                        
+              <iframe title="mapa" id="mapa" src={`https://maps.google.com/maps?q=${this.props.latitud},${this.props.longitud}&z=15&output=embed`} width="100%" height="300" style={{border:0+"px"}} aria-hidden="false"></iframe>                        
               </FormGroup>
               <FormGroup>
                   <TextField  InputProps={{

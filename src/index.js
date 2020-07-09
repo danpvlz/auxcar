@@ -13,12 +13,14 @@ import Asistencia from "views/indexSections/Asistencia.js";
 import Ubicacion from "views/indexSections/Ubicacion.js";
 import Reporte from "views/indexSections/Reporte.js";
 import Auxilio from "views/indexSections/Auxilio.js";
+import SolicitudesAuxilio from 'views/indexSections/SolicitudesAuxilio.js'
 
 import {
   Container
 } from "reactstrap";
 
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
+import SimpleFooter from "components/Footers/SimpleFooter.js";
 
 
 //<Redirect to="/" />
@@ -31,10 +33,9 @@ class App extends React.Component{
 
   render(){
     return(
-      <HashRouter hashType="noslash">
+      <HashRouter hashType="noslash" >
         <DemoNavbar />
         <main ref="main" >
-          
           <div className="position-relative"  >
           <div className="shape shape-style-1 bg-default position-fixed" style={{"zIndex": -1}}>
             <img
@@ -45,9 +46,7 @@ class App extends React.Component{
             />
           </div>
             <section className="section section-lg section-shaped position-relative" >
-            
               <Container className="align-items-center">
-                  
                 <Switch>
                       <Route path="/" exact render={props => <Inicio {...props} />} />
 
@@ -79,6 +78,12 @@ class App extends React.Component{
                         path="/solicitud-auxilio"
                         exact
                         render={props => <Auxilio {...props} />}
+                      />
+
+                      <Route 
+                      path="/solicitudes-auxilio"
+                      exact
+                      render={props => <SolicitudesAuxilio {...props} />}
                       />
 
                       <Redirect to="/" />

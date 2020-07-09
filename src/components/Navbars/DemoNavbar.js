@@ -6,9 +6,9 @@ import Headroom from "headroom.js";
 import {
   Navbar,
   NavbarBrand,
-  UncontrolledCollapse,
+  NavItem,
   Container,
-  Row,
+  Button,
   Col,
 } from "reactstrap";
 
@@ -51,36 +51,15 @@ class DemoNavbar extends React.Component {
                   src={require("assets/img/brand/logo-white.png")}
                 />
               </NavbarBrand>
-              <button className="navbar-toggler" id="navbar_global">
-                <span className="navbar-toggler-icon" />
-              </button>
-              <UncontrolledCollapse
-                toggler="#navbar_global"
-                navbar
-                className={this.state.collapseClasses}
-                onExiting={this.onExiting}
-                onExited={this.onExited}
-              >
-                <div className="navbar-collapse-header">
-                  <Row>
-                    <Col className="collapse-brand" xs="6">
-                      <Link to="/">
-                        <img
-                          alt="..."
-                          src={require("assets/img/brand/logo.png")}
-                        />
-                      </Link>
-                    </Col>
-                    <Col className="collapse-close" xs="6">
-                      <button className="navbar-toggler" id="navbar_global">
-                        <span />
-                        <span />
-                      </button>
-                    </Col>
-                  </Row>
-                </div>
-              </UncontrolledCollapse>
-            </Container>
+              <NavItem className="d-none d-lg-block ml-lg-4">
+                    <Link
+                    to="/solicitudes-auxilio"
+                    >
+                    <span className="nav-link-inner--text text-white ">Admin</span>
+
+                    </Link>
+                  </NavItem>
+              </Container>
           </Navbar>
         </header>
       </>

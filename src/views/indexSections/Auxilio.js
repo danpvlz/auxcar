@@ -15,7 +15,6 @@ class Auxilio extends React.Component {
         this.state = {
             latitud: 0,
             longitud: 0,
-            src: "https://maps.google.com/maps?q=-6.771278088155282,-79.84366000692792&z=15&output=embed",
             cliente: "",
             contacto: "",
             referencia: "",
@@ -38,11 +37,7 @@ class Auxilio extends React.Component {
   getUbicacion=()=>{
     if(navigator.geolocation) {
       navigator.geolocation.watchPosition((position)=>{
-        console.log("Latitude is :", position.coords.latitude);
-        console.log("Longitude is :", position.coords.longitude);
-
-        let src="https://maps.google.com/maps?q="+position.coords.latitude+","+position.coords.longitude+"&z=15&output=embed";
-        this.setState({latitud: position.coords.latitude, longitud: position.coords.longitude, src: src});
+        this.setState({latitud: position.coords.latitude, longitud: position.coords.longitude});
       },()=>{this.setState({mensajeError: "Por favor, otorgue permisos de geolocalización."});});
     }else{
       this.setState({mensajeError: "Geolocalización no disponible"});
@@ -82,7 +77,7 @@ class Auxilio extends React.Component {
       fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/diagnostico`, {
           method: 'POST',
           body: `{
-              "distrito": ${this.props.location.codDistrito},
+              "distrito": ${this.props.location.asistenciaDistrito},
               "costo": ${this.props.location.costo},
               "fallas": [${this.props.location.fallas.toString()}]
           }`,
@@ -140,7 +135,8 @@ class Auxilio extends React.Component {
             animar={this.state.animar}
             distrito={this.props.location.asistenciaDistrito}
             handleChange={this.handleChange}
-            src={this.state.src}
+            latitud={this.state.latitud}
+            longitud={this.state.longitud}
             alertState={this.alertState}
             handleSubmit={this.handleSubmit}/>
           }

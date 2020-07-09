@@ -60,7 +60,9 @@
     "react-router-dom": "5.1.2",
     "react-scripts": "^3.4.0",
     "react-select": "^3.1.0",
-    "reactstrap": "8.4.1"
+    "reactstrap": "8.4.1",
+    "timeago-react": "^3.0.0",
+    "timeago.js": "^4.0.2"
   },
   "devDependencies": {
     "@types/googlemaps": "3.39.2",
