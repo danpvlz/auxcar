@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "04a84e01d523343c8b0d11a3df48f3f3",
+    "revision": "90292c07bc28129c89aebdc361c630f7",
     "url": "/motriztente/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/motriztente/static/css/2.e2dd9b0a.chunk.css"
   },
   {
-    "revision": "9bfdbc8c7819f681e046",
+    "revision": "f0defcc11a22ae5faa11",
     "url": "/motriztente/static/css/main.c5674f18.chunk.css"
   },
   {
@@ -20,12 +20,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/motriztente/static/js/2.02594d78.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "9bfdbc8c7819f681e046",
-    "url": "/motriztente/static/js/main.ef885899.chunk.js"
+    "revision": "f0defcc11a22ae5faa11",
+    "url": "/motriztente/static/js/main.802ebb96.chunk.js"
   },
   {
     "revision": "7a6956e196ccd2e4ccc8856708b02847",
-    "url": "/motriztente/static/js/main.ef885899.chunk.js.LICENSE.txt"
+    "url": "/motriztente/static/js/main.802ebb96.chunk.js.LICENSE.txt"
   },
   {
     "revision": "7505acb3274d7c4258c7",
