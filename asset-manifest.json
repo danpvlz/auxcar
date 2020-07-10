@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/motriztente/static/css/main.c5674f18.chunk.css",
-    "main.js": "/motriztente/static/js/main.593ca4b7.chunk.js",
-    "main.js.map": "/motriztente/static/js/main.593ca4b7.chunk.js.map",
+    "main.js": "/motriztente/static/js/main.9b77b94e.chunk.js",
+    "main.js.map": "/motriztente/static/js/main.9b77b94e.chunk.js.map",
     "runtime-main.js": "/motriztente/static/js/runtime-main.4d157149.js",
     "runtime-main.js.map": "/motriztente/static/js/runtime-main.4d157149.js.map",
     "static/css/2.e2dd9b0a.chunk.css": "/motriztente/static/css/2.e2dd9b0a.chunk.css",
-    "static/js/2.0ac5590e.chunk.js": "/motriztente/static/js/2.0ac5590e.chunk.js",
-    "static/js/2.0ac5590e.chunk.js.map": "/motriztente/static/js/2.0ac5590e.chunk.js.map",
+    "static/js/2.ef525fe6.chunk.js": "/motriztente/static/js/2.ef525fe6.chunk.js",
+    "static/js/2.ef525fe6.chunk.js.map": "/motriztente/static/js/2.ef525fe6.chunk.js.map",
     "index.html": "/motriztente/index.html",
-    "precache-manifest.5fdc918541229a6a6d92348bcbc83ddf.js": "/motriztente/precache-manifest.5fdc918541229a6a6d92348bcbc83ddf.js",
+    "precache-manifest.dd2f6eacc9802e4b1d0b850da51a9764.js": "/motriztente/precache-manifest.dd2f6eacc9802e4b1d0b850da51a9764.js",
     "service-worker.js": "/motriztente/service-worker.js",
     "static/css/2.e2dd9b0a.chunk.css.map": "/motriztente/static/css/2.e2dd9b0a.chunk.css.map",
     "static/css/main.c5674f18.chunk.css.map": "/motriztente/static/css/main.c5674f18.chunk.css.map",
-    "static/js/2.0ac5590e.chunk.js.LICENSE.txt": "/motriztente/static/js/2.0ac5590e.chunk.js.LICENSE.txt",
-    "static/js/main.593ca4b7.chunk.js.LICENSE.txt": "/motriztente/static/js/main.593ca4b7.chunk.js.LICENSE.txt",
+    "static/js/2.ef525fe6.chunk.js.LICENSE.txt": "/motriztente/static/js/2.ef525fe6.chunk.js.LICENSE.txt",
+    "static/js/main.9b77b94e.chunk.js.LICENSE.txt": "/motriztente/static/js/main.9b77b94e.chunk.js.LICENSE.txt",
     "static/media/background-index.jpeg": "/motriztente/static/media/background-index.faab7a05.jpeg",
     "static/media/font-awesome.min.css": "/motriztente/static/media/fontawesome-webfont.fee66e71.woff",
     "static/media/location.png": "/motriztente/static/media/location.6ad69393.png",
@@ -24,8 +24,8 @@
   "entrypoints": [
     "static/js/runtime-main.4d157149.js",
     "static/css/2.e2dd9b0a.chunk.css",
-    "static/js/2.0ac5590e.chunk.js",
+    "static/js/2.ef525fe6.chunk.js",
     "static/css/main.c5674f18.chunk.css",
-    "static/js/main.593ca4b7.chunk.js"
+    "static/js/main.9b77b94e.chunk.js"
   ]
 }
