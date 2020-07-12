@@ -345,7 +345,7 @@ export default class AdminUsuarios extends React.Component{
             </div>
           <div className="col">
           <Fab size="medium" className="float-right" id="_addUser" onClick={this.handleAddEdit} 
-            color="secondary" aria-label="add" component="span"> 
+            color="primary" aria-label="add" component="span"> 
                 <i className="fa fa-plus"></i>
             </Fab>
           </div>
