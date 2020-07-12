@@ -17,7 +17,7 @@ class Inicio extends React.Component {
         <Col lg="6" className="text-center ">
           <h1 className="display-3 text-white animate__animated animate__fadeInDown animate__slow">
             Hola!{" "}
-            <span>Bienvenido a <strong>Motriztente</strong>, tu asistente vehicular</span>
+            <span>Bienvenido a <strong>Auxcar</strong>, tu asistente vehicular</span>
           </h1>
           <div className="mt-1 animate__animated animate__fadeIn">
             <div className="icon icon-md icon-shape">

@@ -1,25 +1,25 @@
 {
-  "name": "motriztente",
+  "name": "auxcar",
   "version": "1.1.0",
-  "description": "Sistema de asistencia vehicular motriztente en react.js",
+  "description": "Sistema de asistencia vehicular Auxcar en react.js",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/danpvlz/motriztente.git"
+    "url": "git+https://github.com/danpvlz/auxcar.git"
   },
   "keywords": [
     "react",
     "reactjs",
     "argon",
     "argon-react",
-    "motriztente"
+    "auxcar"
   ],
   "author": "Daniela Paiva",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/danpvlz/motriztente/issues"
+    "url": "https://github.com/danpvlz/auxcar/issues"
   },
-  "homepage": "https://danpvlz.github.io/motriztente",
+  "homepage": "https://danpvlz.github.io/auxcar",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",

@@ -26,7 +26,7 @@ class Encuesta extends React.Component {
             <form >
                 <CardHeader>
                 <h3 className="display-3 mb-0">
-                    <strong>Motriztente</strong>
+                    <strong>Auxcar</strong>
                 </h3>
                 <div>
                       <div className="icon icon-sm icon-shape">

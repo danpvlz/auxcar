@@ -88,7 +88,7 @@ class Ubicacion extends React.Component {
             <Col className="order-md-1 " md="6">
               <div className="pr-md-5">
                 <div>
-                <h3 className="display-3 text-white mb-0">Motriztente</h3>
+                <h3 className="display-3 text-white mb-0">Auxcar</h3>
                 <div>
                   <div className="icon icon-sm icon-shape">
                     <i className="ni ni-settings text-white" />

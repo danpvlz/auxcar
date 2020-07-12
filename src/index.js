@@ -43,7 +43,7 @@ class App extends React.Component{
   }
 
   logOut=()=>{
-    localStorage.removeItem("motriztante_auth_user"); 
+    localStorage.removeItem("auxcar_auth_user"); 
     this.setState({username: null, sesion:false});
   }
 
@@ -63,7 +63,7 @@ class App extends React.Component{
           let usuario = JSON.data[0];
           if(usuario!=undefined){
               this.setState({sesion: true, error: false});
-              if(recordar){localStorage.setItem("motriztante_auth_user",usuario.nombre);}
+              if(recordar){localStorage.setItem("auxcar_auth_user",usuario.nombre);}
               setTimeout(()=>this.setState({loading:false, username: usuario.nombre}),500);
           }else{
             this.setState({error: true});
@@ -76,7 +76,7 @@ class App extends React.Component{
   }
 
   componentWillMount(){
-    let user_ls = localStorage.getItem("motriztante_auth_user");
+    let user_ls = localStorage.getItem("auxcar_auth_user");
     if(user_ls){
       this.setState({username: user_ls});
     }
