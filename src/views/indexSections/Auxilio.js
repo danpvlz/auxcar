@@ -9,6 +9,9 @@ import {
 import Solicitud from "../partials/Solicitud";
 import Finalizado from "../partials/Finalizado";
 
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 class Auxilio extends React.Component {
     constructor(){
         super();
@@ -21,12 +24,13 @@ class Auxilio extends React.Component {
             done: false,
             animar: false,
             showError: false,
+            open: false,
             mensajeError: "Por favor, complete todos los campos."
         }
     }
     
-  componentDidMount() {
-    if(this.props.location.codDistrito!=undefined){
+  componentWillMount() {
+    if(this.props.location.asistenciaDistrito!=undefined){
       window.scroll(0,0);
       this.getUbicacion();
     }else{
@@ -67,6 +71,70 @@ class Auxilio extends React.Component {
     }
   }
 
+  saveAuxilio = (insertedId) => {
+    fetch("https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/auxilio",
+    {
+      method: 'POST',
+      body: `
+      {
+          "lat": ${this.state.latitud},
+          "long": ${this.state.longitud},
+          "cliente": "${this.state.cliente}",
+          "contacto": "${this.state.contacto.substr(4)}",
+          "diagnostico": ${insertedId},
+          "referencia": "${this.state.referencia}"
+      }
+      `,
+      headers:{
+          'Content-Type': 'application/json'
+      }
+    }).then(response=>{
+      return response.json(); 
+    }).then(JSONresponse=>{
+      this.setState({done:false});
+      return JSONresponse.status;
+    }).then(status=>{
+      if(status==200){
+        this.setState({animar: true, open: false});
+        setTimeout(() => {
+          this.setState({done:true});
+        }, 500);
+      }
+    })
+    .catch(()=>{
+        console.clear();
+        this.setState({open: true});
+        setTimeout(()=>this.saveAuxilio(insertedId),7000);
+    });
+  }
+
+  saveDiagnostico = () => {
+    fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/diagnostico`, {
+          method: 'POST',
+          body: `{
+              "distrito": ${this.props.location.codDistrito},
+              "costo": ${this.props.location.costo},
+              "fallas": [${this.props.location.fallas.toString()}]
+          }`,
+          headers:{
+              'Content-Type': 'application/json'
+          }
+      })
+      .then(response=>{
+        return response.json();
+      })
+      .then(JSONresponse=>{
+        return JSONresponse.insertedId;
+      }).then(_id=>{
+        this.setState({open: false});
+        this.saveAuxilio(_id);
+      })
+      .catch(()=>{
+          console.clear();
+          this.setState({open: true});
+          setTimeout(()=>this.saveDiagnostico(),7000);
+      });
+  }
 
   handleSubmit=()=>{
     if(this.state.cliente.length>0 &&
@@ -74,50 +142,7 @@ class Auxilio extends React.Component {
       this.state.referencia.length>0 && 
       this.state.latitud != 0 && 
       this.state.longitud != 0){
-      fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/diagnostico`, {
-          method: 'POST',
-          body: `{
-              "distrito": ${this.props.location.asistenciaDistrito},
-              "costo": ${this.props.location.costo},
-              "fallas": [${this.props.location.fallas.toString()}]
-          }`,
-          headers:{
-              'Content-Type': 'application/json'
-          }
-      }).then(response=>{
-        return response.json();
-      })
-      .then(JSONresponse=>{
-        fetch("https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/auxilio",
-          {
-            method: 'POST',
-            body: `
-            {
-                "lat": ${this.state.latitud},
-                "long": ${this.state.longitud},
-                "cliente": "${this.state.cliente}",
-                "contacto": "${this.state.contacto.substr(4)}",
-                "diagnostico": ${JSONresponse.insertedId},
-                "referencia": "${this.state.referencia}"
-            }
-            `,
-            headers:{
-                'Content-Type': 'application/json'
-            }
-          }).then(response=>{
-            return response.json(); 
-          }).then(JSONresponse=>{
-            return JSONresponse.status;
-          }).then(status=>{
-            if(status==200){
-              this.setState({animar: true});
-              setTimeout(() => {
-                this.setState({done:true});
-              }, 500);
-            }
-          }).catch(e=>console.log(e));
-      })
-      .catch(e=>console.log(e));      
+        this.saveDiagnostico();    
     }else{
       this.alertState();
     }
@@ -126,6 +151,9 @@ class Auxilio extends React.Component {
   render() {
     return (
       <>
+        <Backdrop open={this.state.open} style={{"position": "fixed", "zIndex": 5}}>
+            <CircularProgress color="inherit" />
+        </Backdrop>
         <Row className="justify-content-center">
           {
             this.state.done ? <Finalizado /> : 

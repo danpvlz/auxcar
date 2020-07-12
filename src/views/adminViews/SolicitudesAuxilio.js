@@ -1,18 +1,24 @@
 import React from "react";
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import Icon from '@material-ui/core/Icon';
-import IconButton from '@material-ui/core/IconButton';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TablePagination,
+    TableRow,
+    Icon,
+    IconButton
+ } from '@material-ui/core';
+
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import {
     Button,
     Modal,
-    Card
+    Card,
+    Badge
 } from 'reactstrap'
 
 function ModalResponse(props){
@@ -84,7 +90,7 @@ function ModalResponse(props){
                 <strong>Asistencia:</strong> S/. {props.seleccionado.asistencia}
             </p>
             <p className="mb-0 text-right">
-                <strong>Subtotal*:</strong> S/. {props.seleccionado.costo}
+                <strong>Subtotal:</strong> S/. {props.seleccionado.costo}
             </p>
         </div>
             </div>
@@ -92,15 +98,15 @@ function ModalResponse(props){
             <div className="row">
             <div className="col">
             <Button className="float-left" onClick={()=>props.cambiarEstado(props.seleccionado.idAuxilio, 1)} block color="primary" type="button">
-                Vehículo enviado
+                Enviar mecánico
             </Button>
             <Button className="float-left"  onClick={()=>props.cambiarEstado(props.seleccionado.idAuxilio, 2)} block color="primary" type="button">
-                Atención exitosa
+                Facturar solicitud
             </Button>
             </div>
             <div className="col">
             <Button className="float-right" onClick={()=>props.cambiarEstado(props.seleccionado.idAuxilio, 3)} block color="danger" type="button">
-                Cancelar pedido
+                Cancelar solicitud
             </Button>
             </div>
             </div>
@@ -118,63 +124,34 @@ class SolicitudesAuxilio extends React.Component {
             rowsPerPage: 10,
             seleccionado: null,
             defaultModal: false,
-            username: null
+            username: null,
+            open: false,
         };
     }
-    componentDidMount(){
-        this.authentication();
+    
+    componentWillMount(){
         this.loadData();
     }
-
-    authentication = () => {
-        let user_ls = localStorage.getItem("motriztante_auth_user");
-        var user = "";
-        var password = "";
-        if(!user_ls){
-            do{
-                user = prompt("Usuario:");
-                password = prompt("Contraseña:");
-            }while(!user || !password);
-            fetch(`http://localhost:4000/api/auth`,{
-                method: 'POST',
-                body: `{
-                    "user": "${user}",
-                    "pass": "${password}"
-                }`,
-                headers:{
-                'Content-Type': 'application/json'
-                }   
-            }).then((response)=>{
-                return response.json();
-            }).then((JSON)=>{
-                let usuario = JSON.data[0];
-                if(usuario){
-                    localStorage.setItem("motriztante_auth_user",usuario.nombre);
-                    this.setState({username: usuario.nombre});
-                }else{
-                    this.props.history.push('/inicio');
-                }
-            });
-        }else{
-            this.setState({username: user_ls});
-        }
-    }
-
+    
     loadData = () => {
-        fetch(`http://localhost:4000/api/solicitudes-auxilio`, {method: 'POST'})
+        fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/solicitudes-auxilio`, {method: 'POST'})
         .then((response)=>{
             return response.json();
         })
         .then((JSONresponse)=>{
             if(JSONresponse.status == 200){
                 this.setState({solicitudes: JSONresponse.data});
+                this.setState({open: false});
             }
         })
-        .catch((e)=>{console.log(e)});
+        .catch(()=>{
+            console.clear();
+            this.setState({open: true});
+            setTimeout(()=>this.loadData(),7000);
+        });
     }
 
     handleChangePage = (event, newPage) => {
-        console.log(newPage);
         this.setState({page: newPage});
     };
 
@@ -195,7 +172,7 @@ class SolicitudesAuxilio extends React.Component {
     };
 
     cambiarEstado = (_id, estado) =>{
-        fetch(`http://localhost:4000/api/solicitudes-auxilio/actualizar-estado/`,{
+        fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/solicitudes-auxilio/actualizar-estado/`,{
             method: 'POST',
             body: `{
                 "_id": ${_id},
@@ -210,30 +187,34 @@ class SolicitudesAuxilio extends React.Component {
         })
         .then(JSONresponse=>{
             if(JSONresponse.status==200){
-                console.log(JSONresponse.message);
+                this.setState({open: false});
                 this.loadData();
                 this.toggleModal();
             }
         })
-        .catch(e=>{console.log(e)});
+        .catch(()=>{
+            console.clear();
+            this.setState({open: true});
+            setTimeout(()=>this.cambiarEstado(_id, estado),7000);
+        });
     }
 
 //hover style={{"cursor": "pointer"}}
     render(){
         return(
             <>
-            <div className="row py-3 align-items-center text-white">
-          <div className="col">
-            <h3 className="heading mb-0 text-white">Bienvenido, {this.state.username}</h3>
-          </div>
-          <div className="col">
-              <Button className="float-right" size="sm" onClick={()=>{localStorage.removeItem("motriztante_auth_user"); this.props.history.push('/inicio');}}>Cerrar Sesión</Button>
-          </div>
+        <Backdrop open={this.state.open} style={{"position": "fixed", "zIndex": 5}}>
+            <CircularProgress color="inherit" />
+        </Backdrop>
+        <div className="row py-3 align-items-center text-white  animate__animated animate__fadeInDown animate__fast">
+            <div className="col">
+            <h1 className="display-4 mb-0 text-white">SOLICITUDES DE AUXILIO</h1>
+            </div>
         </div>
-            <Card>
-              <TableContainer>
+        <Card className="animate__animated animate__fadeInDown animate__fast">
+            <TableContainer>
                 <Table stickyHeader className="table-responsive text-nowrap">
-                  <TableHead>
+                    <TableHead>
                     <TableRow>
                         <TableCell>
                         <strong> Fecha </strong>
@@ -260,10 +241,25 @@ class SolicitudesAuxilio extends React.Component {
                         <strong>Detalle</strong>
                         </TableCell>
                     </TableRow>
-                  </TableHead>
-                  <TableBody>
+                    </TableHead>
+                    <TableBody>
                     {
                         this.state.solicitudes.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((solicitud, i)=>{
+                            var color = "primary";
+                            switch (solicitud.estado.toLowerCase()) {
+                                case 'pendiente':
+                                    color="warning";
+                                    break;
+                                case 'en camino':
+                                    color="info";
+                                    break;
+                                case 'cancelado':
+                                    color="danger";
+                                    break;
+                                case 'facturado':
+                                    color="success";
+                                    break;
+                            }
                             return(
                                 <TableRow  key={i+"_tr"} tabIndex={-1}>
                                     <TableCell>
@@ -285,32 +281,35 @@ class SolicitudesAuxilio extends React.Component {
                                         S/. {solicitud.costo}
                                     </TableCell>
                                     <TableCell>
+                                    <Badge className="text-uppercase" color={color} pill>
                                         {solicitud.estado}
+                                    </Badge>
                                     </TableCell>
                                     <TableCell>
                                         <IconButton onClick={(event) => this.handleClickRow(event, solicitud.idAuxilio)} fontSize="small" aria-label="detalles" color="primary" component="span">
-                                            <Icon className="fa fa-plus-circle" fontSize="small" />
+                                            <Icon className="fa fa-eye" fontSize="small" />
                                         </IconButton>
                                     </TableCell>
                                 </TableRow>          
                             );
                         })
                     }
-                </TableBody>
+                    </TableBody>
                 </Table>
-              </TableContainer>
-              <TablePagination
-                component="div"
-                labelRowsPerPage="Mostrar:"
-                count={this.state.solicitudes.length}
-                rowsPerPage={this.state.rowsPerPage}
-                page={this.state.page}
-                onChangePage={this.handleChangePage}
-                onChangeRowsPerPage={this.handleChangeRowsPerPage}
-              />
-            </Card>
-            {this.state.seleccionado ? 
-            <ModalResponse cambiarEstado={this.cambiarEstado} defaultModal={this.state.defaultModal} seleccionado={this.state.seleccionado} toggleModal={this.toggleModal}/> : ""}
+            </TableContainer>
+            <TablePagination
+            component="div"
+            labelRowsPerPage="Mostrar:"
+            count={this.state.solicitudes.length}
+            rowsPerPage={this.state.rowsPerPage}
+            page={this.state.page}
+            onChangePage={this.handleChangePage}
+            onChangeRowsPerPage={this.handleChangeRowsPerPage}
+            />
+        
+        </Card>
+        {this.state.seleccionado ? 
+        <ModalResponse cambiarEstado={this.cambiarEstado} defaultModal={this.state.defaultModal} seleccionado={this.state.seleccionado} toggleModal={this.toggleModal}/> : ""}
             </>
         );
     }

@@ -42,9 +42,8 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "@material-ui/core": "^4.10.2",
+    "@material-ui/core": "^4.11.0",
     "animate.css": "^4.1.0",
-    "axios": "^0.19.2",
     "bootstrap": "4.3.1",
     "classnames": "2.2.6",
     "gh-pages": "^3.0.0",
@@ -60,9 +59,7 @@
     "react-router-dom": "5.1.2",
     "react-scripts": "^3.4.0",
     "react-select": "^3.1.0",
-    "reactstrap": "8.4.1",
-    "timeago-react": "^3.0.0",
-    "timeago.js": "^4.0.2"
+    "reactstrap": "8.4.1"
   },
   "devDependencies": {
     "@types/googlemaps": "3.39.2",

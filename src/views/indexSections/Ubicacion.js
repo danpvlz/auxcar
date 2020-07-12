@@ -1,5 +1,4 @@
 import React from "react";
-import distritos from '../../data/distritos.json';
 // reactstrap components
 import {
   Col,
@@ -7,21 +6,28 @@ import {
   Button
 } from "reactstrap";
 
+import {
+  Backdrop,
+  CircularProgress
+} from '@material-ui/core';
+
 import Select from "react-select";
 
 class Ubicacion extends React.Component {
   constructor(){
     super();
     this.state={
+      data: [],
       distritos: [],
       distritoSelected: "",
       distritoName: "",
-      costoDistrito: 0.0
+      costoDistrito: 0.0,
+      loading: false
     }        
   }
 
   handleProvinciaChange=(value)=>{
-    const distritos_data = distritos.filter((distrito) => distrito.provincia  == value.value);
+    const distritos_data = this.state.data.slice().filter((distrito) => distrito.provincia  == value.value);
     this.setState({distritos: distritos_data, distritoSelected: "", costoDistrito: 0.0});
   }
 
@@ -40,6 +46,24 @@ class Ubicacion extends React.Component {
     }
   }
 
+  loadData = () => {
+    fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/distrito`)
+    .then(response=>{
+        return response.json();
+    })
+    .then(data=>{
+        this.setState({data: data, loading: false});
+    })
+    .catch(e=>{
+        console.clear();
+        this.setState({loading: true});
+        setTimeout(()=>this.loadData, 7000);
+    });
+  }
+
+  componentWillMount(){
+    this.loadData();
+  }
   
   render() {
     const provincias = [
@@ -50,6 +74,9 @@ class Ubicacion extends React.Component {
       
     return (
         <>
+        <Backdrop open={this.state.loading} style={{"position": "fixed", "zIndex": 5}}>
+            <CircularProgress color="inherit" />
+        </Backdrop>
           <Row className="align-items-center animate__animated animate__fadeIn">
             <Col className="order-md-2 " md="6">
               <img

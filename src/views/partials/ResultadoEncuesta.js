@@ -5,8 +5,14 @@ import {
     Card,
     CardBody,
     Col,
-    Button
+    Button,
+    FormGroup
 } from 'reactstrap'
+
+import {
+  TextField,
+} from '@material-ui/core';
+
 import BotonAsistencia from "./BotonAsistencia";
 
 class ResultadoEncuesta extends React.Component {
@@ -16,9 +22,9 @@ class ResultadoEncuesta extends React.Component {
     var titulo = "Su reporte está listo";
     var clase = "align-items-center mt-4 animate__animated animate__slideInDown animate__fast";
     if(this.props.estado===0){
-      gradiente = "bg-danger align-items-center";
+      gradiente = "bg-primary align-items-center";
       icono = "fa fa-exclamation-triangle fa-3x";
-      titulo = "No se puede determinar!";
+      titulo = "No se tiene suficiente información para detectar la falla de su vehículo. Describa su situación a continuación:";
       clase = "align-items-center mt-4 animate__animated animate__flipInX animate__fast";
     }
     
@@ -28,12 +34,18 @@ class ResultadoEncuesta extends React.Component {
             <CardBody className="text-white">
                 <div className="py-3 text-center">
                 <i className={icono} />
-                <p className="heading mt-5">{titulo}</p>  
+                <p className="mt-5">{titulo}</p> 
+                {
+                  this.props.estado===0 ? 
+                  <FormGroup  >
+                    <TextField fullWidth id="txtDescripcion" multiline autoComplete="off"/>
+                </FormGroup> : ""
+                }
                 </div>
                 {
                   this.props.estado===0 ? 
                   <Button
-                  className="text-danger"
+                  className="text-primary"
                   color="neutral"
                   type="button"
                   block

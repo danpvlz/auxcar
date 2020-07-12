@@ -1,5 +1,8 @@
 import React from "react";
 import { Link } from 'react-router-dom'
+
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 // reactstrap components
 import {
   Col,
@@ -14,20 +17,20 @@ class Reporte extends React.Component {
       fallas: [],
       asistenciaPrecio: 0.0,
       reparacion: 0.0,
-      subtotal: 0.0
+      subtotal: 0.0,
+      open: false
     }
 
   componentDidMount(){
     if(this.props.location.fallas_identificadas!=undefined){
-      console.log(this.props.location.fallas_identificadas);
      this.init();
     }else{
       this.props.history.push('/inicio');
     }
   }
   
-  init=async()=>{
-    let response = await fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/fallas-vehiculares`, {
+  init=()=>{
+    fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/fallas-vehiculares`, {
       method: 'POST',
       body: `{
         "fallas": [${this.props.location.fallas_identificadas.toString()}]
@@ -35,19 +38,26 @@ class Reporte extends React.Component {
       headers:{
         'Content-Type': 'application/json'
       }
-    });
-
-    let data = await response.json();
-    let reparacion=0.0;
-    data.map(falla=>{
-      reparacion+=falla.costo;
-    });
-    
-    this.setState({
-      asistenciaPrecio: this.props.location.asistenciaPrecio,
-      reparacion: reparacion,
-      subtotal: reparacion+this.props.location.asistenciaPrecio,
-      fallas: data
+    })
+    .then(response=>{
+      return response.json();
+    })
+    .then(data=>{
+      let reparacion=0.0;
+      data.map(falla=>{
+        reparacion+=falla.costo;
+      });
+      this.setState({
+        asistenciaPrecio: this.props.location.asistenciaPrecio,
+        reparacion: reparacion,
+        subtotal: reparacion+this.props.location.asistenciaPrecio,
+        fallas: data,
+        open: false
+      });
+    }).catch(()=>{
+      console.clear();
+      this.setState({open: true});
+      setTimeout(()=>this.init(),7000);
     });
   }
   
@@ -56,6 +66,9 @@ class Reporte extends React.Component {
       //section section-lg bg-gradient-default
     return (
         <>
+        <Backdrop open={this.state.open} style={{"position": "fixed", "zIndex": 5}}>
+            <CircularProgress color="inherit" />
+        </Backdrop>
           <Row className="justify-content-center mt-4 ">
             <Col className="text-center mb-4 animate__animated animate__fadeInDown" sm="12">
               <h2 className="display-3 text-white">Reporte de diagnóstico vehicular</h2>
@@ -78,21 +91,12 @@ class Reporte extends React.Component {
                             <tbody className="table-borderless  description mt-3">
                             {
                             this.state.fallas.map((falla, i)=>{
-                              if(falla.costo!=0){
                               return(
                               <tr key={i+"_tr"}>
                                 <td>{falla.descripcion}</td>
-                                <td>S/.{falla.costo}</td>
+                                <td>{falla.costo == 0 ? "Pendiente" : "S/. " + falla.costo}</td>
                                 <td>{falla.causa}</td>
                               </tr>);
-                              }else{
-                                return(
-                                  <tr key={i+"_tr"} className="text-danger">
-                                    <td><strong>{falla.descripcion}</strong></td>
-                                    <td><strong>Pendiente</strong></td>
-                                    <td><strong>{falla.causa}</strong></td>
-                                  </tr>);
-                              }
                             })}
                             </tbody>
                         </table>

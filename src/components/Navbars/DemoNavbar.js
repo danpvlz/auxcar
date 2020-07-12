@@ -1,28 +1,49 @@
 import React from "react";
-import { Link } from "react-router-dom";
-// JavaScript plugin that hides or shows a component based on your scroll
+import { Link  } from "react-router-dom";
 import Headroom from "headroom.js";
-// reactstrap components
+// JavaScript plugin that hides or shows a component based on your scroll
+
 import {
   Navbar,
   NavbarBrand,
-  NavItem,
   Container,
-  Button,
-  Col,
 } from "reactstrap";
 
+import {
+  Drawer,
+  List,
+  Divider,
+  IconButton,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListSubheader
+} from '@material-ui/core';
+
 class DemoNavbar extends React.Component {
+  constructor(){
+    super();
+    this.state={
+      open: false,
+      collapseClasses: "",
+      collapseOpen: false
+    }
+  }
+
+  handleDrawerOpen = () => {
+    this.setState({open: !this.state.open});
+  };
+
+  logOut = () => {
+    this.handleDrawerOpen();
+    this.props.logOut();
+  }
+
   componentDidMount() {
     let headroom = new Headroom(document.getElementById("navbar-main"));
     // initialise
     headroom.init();
   }
-  state = {
-    collapseClasses: "",
-    collapseOpen: false
-  };
-
   onExiting = () => {
     this.setState({
       collapseClasses: "collapsing-out"
@@ -36,13 +57,15 @@ class DemoNavbar extends React.Component {
   };
 
   render() {
+
     return (
       <>
-        <header className="header-global">
+        <header className="header-global ">
           <Navbar
-            className="navbar-main navbar-transparent navbar-light headroom pt-4"
+            className="position-fixed navbar-main navbar-transparent navbar-light headroom"
             expand="lg"
             id="navbar-main"
+            style={{"zIndex": 1}}
           >
             <Container>
               <NavbarBrand className="mr-lg-5" to="/" tag={Link}>
@@ -51,20 +74,93 @@ class DemoNavbar extends React.Component {
                   src={require("assets/img/brand/logo-white.png")}
                 />
               </NavbarBrand>
-              <NavItem className="d-none d-lg-block ml-lg-4">
-                    <Link
-                    to="/solicitudes-auxilio"
-                    >
-                    <span className="nav-link-inner--text text-white ">Admin</span>
-
-                    </Link>
-                  </NavItem>
+              {
+                this.props.username ? 
+                <IconButton onClick={this.handleDrawerOpen} edge="end" color="inherit" aria-label="menu" component="span">
+                  <span className="navbar-toggler-icon" />
+                </IconButton>
+                :
+                <IconButton edge="end" color="inherit" aria-label="iniciar_sesion" component="span">
+                  <Link to="/inicio-sesion">
+                  <span className="nav-link-inner--text text-white">
+                    <i className="fa fa-sign-in fa-lg"></i>
+                  </span>
+                  </Link>
+                </IconButton>
+              }                  
               </Container>
           </Navbar>
         </header>
+      <Drawer
+        variant="temporary"
+        anchor="right"
+        open={this.state.open}
+        onClose={this.handleDrawerOpen}
+        
+        style={{"position": "relative"}}
+      >
+        <br />
+        <div style={{paddingLeft: "15px", paddingRight: "15px"}}>
+        <ListItem>
+          <ListItemText primary="Bienvenido," secondary={this.props.username} />
+        </ListItem>
+        <br />
+        <Divider />
+        <List>
+          <ListSubheader component="div" id="nested-list-subheader">
+            Atender
+          </ListSubheader>
+        <ListItem button onClick={this.handleDrawerOpen} component={Link} to='/'>
+          <ListItemIcon  style={{"minWidth": 40}}><i className="fa fa-bell"></i></ListItemIcon>
+          <ListItemText primary="Solicitudes de auxilio" />
+        </ListItem>
+          <ListSubheader component="div" id="nested-list-subheader">
+            Mantenimientos
+          </ListSubheader>
+          <ListItem button onClick={this.handleDrawerOpen} component={Link} to='/usuarios'>
+            <ListItemIcon  style={{"minWidth": 40}}><i className="fa fa-users"></i></ListItemIcon>
+            <ListItemText  primary="Usuarios" />
+          </ListItem>
+          <ListItem button onClick={this.handleDrawerOpen} component={Link} to='/fallas-vehiculares'>
+            <ListItemIcon style={{"minWidth": 40}}><i className="fa fa-list-alt"></i></ListItemIcon>
+            <ListItemText primary="Fallas vehiculares" />
+          </ListItem>
+          <ListItem button onClick={this.handleDrawerOpen} component={Link} to='/distritos'>
+            <ListItemIcon style={{"minWidth": 40}}><i className="fa fa-location-arrow"></i></ListItemIcon>
+            <ListItemText primary="Distritos" />
+          </ListItem>
+        </List>
+        <List style={{
+          "position": "absolute",
+          "bottom": "10px"}}>
+          <ListItem button onClick={this.logOut}>
+            <ListItemIcon style={{"minWidth": 40}}><i className="fa fa-sign-out fa-lg"></i></ListItemIcon>
+            <ListItemText primary="Cerrar Sesión" />
+          </ListItem>
+        </List>
+        </div>
+        
+        
+      </Drawer>
       </>
     );
   }
 }
 
 export default DemoNavbar;
+
+/*
+
+
+        <div style={{
+          "display": 'flex',
+          "alignItems": 'center',
+          "justifyContent": 'flex-center',
+        }}>
+          <IconButton onClick={this.handleDrawerOpen} component="span">
+            <div className="icon icon-md icon-shape">
+              <i className="fa fa-chevron-right text-primary"></i>
+            </div>
+          </IconButton>
+        </div>
+ */

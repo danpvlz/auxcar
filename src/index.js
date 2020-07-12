@@ -1,7 +1,7 @@
 
 import React from "react";
 import {render} from "react-dom";
-import { Route, Switch, Redirect, HashRouter } from "react-router-dom";
+import { Route, Switch, Redirect, HashRouter  } from "react-router-dom";
 
 import "assets/vendor/nucleo/css/nucleo.css";
 import "animate.css";
@@ -13,28 +13,79 @@ import Asistencia from "views/indexSections/Asistencia.js";
 import Ubicacion from "views/indexSections/Ubicacion.js";
 import Reporte from "views/indexSections/Reporte.js";
 import Auxilio from "views/indexSections/Auxilio.js";
-import SolicitudesAuxilio from 'views/indexSections/SolicitudesAuxilio.js'
+import InicioSesion from 'views/indexSections/InicioSesion.js'
+import SolicitudesAuxilio from 'views/adminViews/SolicitudesAuxilio.js'
+import AdminUsuarios from 'views/adminViews/AdminUsuarios.js'
+import FallasVehiculares from 'views/adminViews/FallasVehiculares.js'
+import Distritos from 'views/adminViews/Distritos.js'
 
-import {
+import {  
   Container
 } from "reactstrap";
 
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import SimpleFooter from "components/Footers/SimpleFooter.js";
-
 
 //<Redirect to="/" />
 class App extends React.Component{
+  constructor(){
+    super();
+    this.state={
+      username: null,
+      loading: false,
+      sesion: false,
+      error: false
+    }
+  }
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
   }
 
+  logOut=()=>{
+    localStorage.removeItem("motriztante_auth_user"); 
+    this.setState({username: null, sesion:false});
+  }
+
+  authentication = (user,password,recordar) => {
+    fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/auth`,{
+          method: 'POST',
+          body: `{
+              "user": "${user}",
+              "pass": "${password}"
+          }`,
+          headers:{
+          'Content-Type': 'application/json'
+          }   
+      }).then((response)=>{
+          return response.json();
+      }).then((JSON)=>{
+          let usuario = JSON.data[0];
+          if(usuario!=undefined){
+              this.setState({sesion: true, error: false});
+              if(recordar){localStorage.setItem("motriztante_auth_user",usuario.nombre);}
+              setTimeout(()=>this.setState({loading:false, username: usuario.nombre}),500);
+          }else{
+            this.setState({error: true});
+          }
+      }).catch(()=>{
+          console.clear();
+          this.setState({loading: true});
+          setTimeout(()=>this.authentication(user,password),7000);
+      });
+  }
+
+  componentWillMount(){
+    let user_ls = localStorage.getItem("motriztante_auth_user");
+    if(user_ls){
+      this.setState({username: user_ls});
+    }
+  }
+
   render(){
     return(
       <HashRouter hashType="noslash" >
-        <DemoNavbar />
+        <DemoNavbar username={this.state.username} logOut={this.logOut}/>
         <main ref="main" >
           <div className="position-relative"  >
           <div className="shape shape-style-1 bg-default position-fixed" style={{"zIndex": -1}}>
@@ -47,48 +98,80 @@ class App extends React.Component{
           </div>
             <section className="section section-lg section-shaped position-relative" >
               <Container className="align-items-center">
-                <Switch>
-                      <Route path="/" exact render={props => <Inicio {...props} />} />
+                {
+                  this.state.username ? 
+                  <Switch>
+                    <Route 
+                    path="/"
+                    exact
+                    render={props => <SolicitudesAuxilio {...props} />}
+                    />
 
-                      <Route
-                        path="/inicio"
-                        exact
-                        render={props => <Inicio {...props} />}
-                      />
-
-                      <Route
-                        path="/ubicacion"
-                        exact
-                        render={props => <Ubicacion {...props} />}
-                      />
-
-                      <Route
-                        path="/asistencia-vehicular"
-                        exact
-                        render={props => <Asistencia {...props} />}
-                      />
-
-                      <Route
-                        path="/reporte-diagnostico"
-                        exact
-                        render={props => <Reporte {...props} />}
-                      />
-
-                      <Route
-                        path="/solicitud-auxilio"
-                        exact
-                        render={props => <Auxilio {...props} />}
-                      />
-
-                      <Route 
-                      path="/solicitudes-auxilio"
+                  <Route 
+                    path="/usuarios"
+                    exact
+                    render={props => <AdminUsuarios {...props} />}
+                    />
+                    
+                  <Route 
+                    path="/fallas-vehiculares"
+                    exact
+                    render={props => <FallasVehiculares {...props} />}
+                    />
+                    
+                    <Route 
+                      path="/distritos"
                       exact
-                      render={props => <SolicitudesAuxilio {...props} />}
+                      render={props => <Distritos {...props} />}
                       />
+                    <Redirect to="/" />
+                  </Switch>
+                  :
+                  <Switch>
+                    <Route path="/" exact render={props => <Inicio {...props} />} />
 
-                      <Redirect to="/" />
+                    <Route
+                      path="/inicio"
+                      exact
+                      render={props => <Inicio {...props} />}
+                    />
 
-                      </Switch>  
+                    <Route
+                      path="/ubicacion"
+                      exact
+                      render={props => <Ubicacion {...props} />}
+                    />
+
+                    <Route
+                      path="/asistencia-vehicular"
+                      exact
+                      render={props => <Asistencia {...props} />}
+                    />
+
+                    <Route
+                      path="/reporte-diagnostico"
+                      exact
+                      render={props => <Reporte {...props} />}
+                    />
+
+                    <Route
+                      path="/solicitud-auxilio"
+                      exact
+                      render={props => <Auxilio {...props} />}
+                    />
+
+                    <Route
+                      path="/inicio-sesion"
+                      exact
+                      
+                      render={props => <InicioSesion error={this.state.error} sesion={this.state.sesion} logOut={this.logOut} loading={this.state.loading}
+                      loginF={this.authentication} {...props} />}
+                    />
+
+                    <Redirect to="/" />
+
+                  </Switch>  
+                }
               </Container>
             </section>
           </div>
