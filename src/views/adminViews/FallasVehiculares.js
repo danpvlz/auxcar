@@ -55,7 +55,7 @@ function ModalEdit(props){
                     <TextField defaultValue={props.fallaSeleccionada.causa} onChange={props.handleChange} fullWidth id="txtCausa" multiline label="Causa" autoComplete="off"/>
                 </FormGroup>
                 <FormGroup>
-                    <TextField value={props.fallaSeleccionada.sistema} fullWidth InputProps={{readOnly: true}} id="txtSistema" multiline label="Sistema" autoComplete="off"/>
+                    <TextField value={props.fallaSeleccionada.sistema} fullWidth disabled id="txtSistema" multiline label="Sistema" autoComplete="off"/>
                 </FormGroup>
                 <FormGroup>
                 <NumberFormat InputProps={{
