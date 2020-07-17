@@ -19,6 +19,7 @@ import AdminUsuarios from 'views/adminViews/AdminUsuarios.js'
 import FallasVehiculares from 'views/adminViews/FallasVehiculares.js'
 import Distritos from 'views/adminViews/Distritos.js'
 
+import IdleTimer from 'react-idle-timer'
 import {  
   Container
 } from "reactstrap";
@@ -30,6 +31,7 @@ class App extends React.Component{
   constructor(){
     super();
     this.state={
+      sesionId: null,
       username: null,
       loading: false,
       sesion: false,
@@ -44,7 +46,13 @@ class App extends React.Component{
 
   logOut=()=>{
     localStorage.removeItem("auxcar_auth_user"); 
-    this.setState({username: null, sesion:false});
+    localStorage.removeItem("auxcar_auth_sesionId"); 
+    this.setState({username: null, sesion:false,sesionId:null});
+  }
+
+  logIn=(user,password,recordar)=>{
+    this.authentication(user,password,recordar);
+    //setTimeout(()=>{this.logOut();},10000);
   }
 
   authentication = (user,password,recordar) => {
@@ -63,8 +71,9 @@ class App extends React.Component{
           let usuario = JSON.data[0];
           if(usuario!=undefined){
               this.setState({sesion: true, error: false});
-              if(recordar){localStorage.setItem("auxcar_auth_user",usuario.nombre);}
-              setTimeout(()=>this.setState({loading:false, username: usuario.nombre}),500);
+              if(recordar){localStorage.setItem("auxcar_auth_user",usuario.nombre);
+                          localStorage.setItem("auxcar_auth_sesionId",usuario.idUsuario);}
+              setTimeout(()=>this.setState({loading:false, username: usuario.nombre,sesionId: usuario.idUsuario}),500);
           }else{
             this.setState({error: true});
           }
@@ -77,8 +86,9 @@ class App extends React.Component{
 
   componentWillMount(){
     let user_ls = localStorage.getItem("auxcar_auth_user");
+    let sesionId = localStorage.getItem("auxcar_auth_sesionId");
     if(user_ls){
-      this.setState({username: user_ls});
+      this.setState({username: user_ls,sesionId:sesionId});
     }
   }
 
@@ -110,7 +120,7 @@ class App extends React.Component{
                   <Route 
                     path="/usuarios"
                     exact
-                    render={props => <AdminUsuarios {...props} />}
+                    render={props => <AdminUsuarios userLog={this.state.sesionId} {...props} />}
                     />
                     
                   <Route 
@@ -165,7 +175,7 @@ class App extends React.Component{
                       exact
                       
                       render={props => <InicioSesion error={this.state.error} sesion={this.state.sesion} logOut={this.logOut} loading={this.state.loading}
-                      loginF={this.authentication} {...props} />}
+                      loginF={this.logIn} {...props} />}
                     />
 
                     <Redirect to="/" />

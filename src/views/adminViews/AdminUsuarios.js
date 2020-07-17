@@ -22,11 +22,7 @@ import {
     TextField,
     InputAdornment,
     Fab,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogContentText,
-    DialogActions
+    MenuItem
 } from '@material-ui/core';
 
 function AlertConfirmacion(props){
@@ -39,27 +35,36 @@ function AlertConfirmacion(props){
         <div className="modal-body text-white">
             <div className="py-3 text-center">
                     <i className="fa fa-exclamation-triangle fa-3x" />
-                    <p className="heading mt-5">¿Seguro de eliminar?</p>  
+                    <p className="heading mt-5">{
+                        props.userLog != props.deleteId ?
+                        "¿Seguro de eliminar?":
+                        "No puede eliminar su usuario"
+                    } </p>  
             </div>
         </div>
         <div className="modal-footer">
             <div className="col text-center">
-                <Button
-                className="text-white float-left"
+            <Button
+                className={props.userLog != props.deleteId ? "text-white float-left" : "text-white text-center"}
                 color="link"
                 type="button"
                 onClick={props.toggleModal}
                 >
                 Cerrar
             </Button>
-            <Button
+            {
+                props.userLog != props.deleteId ?
+                <Button
                 className="text-white float-right"
                 color="link"
                 type="button"
                 onClick={props.deleteUser}
                 >
                 Eliminar
-            </Button>
+                </Button>:
+                ""
+            }
+            
             </div>
         </div>
         </Modal>
@@ -128,11 +133,26 @@ function ModalAddEdit(props){
                     } fullWidth id="txtNombre" label="Nombre" autoComplete="off"/>
                 </FormGroup>
                 <FormGroup>
-                    <TextField  onChange={props.handleChange} defaultValue={
-                        props.usuarioSeleccionado != undefined ?
-                        props.usuarioSeleccionado.rol :
-                        ""
-                    } fullWidth id="txtRol" label="Rol" autoComplete="off"/>
+                    <TextField
+                        defaultValue={
+                            props.usuarioSeleccionado != undefined ?
+                            props.usuarioSeleccionado.rol :
+                            "Administrador"
+                        }
+                        select
+                        label="Rol"
+                        autoComplete="off"
+                        onChange={props.handleChange}
+                        fullWidth
+                        id="txtRol"
+                        >
+                        <MenuItem value="Administrador">
+                        Administrador
+                        </MenuItem>
+                        <MenuItem value="Usuario">
+                        Usuario
+                        </MenuItem>
+                        </TextField>
                 </FormGroup>
             </form>
             </div>
@@ -161,11 +181,12 @@ export default class AdminUsuarios extends React.Component{
             page: 0,
             rowsPerPage: 10,
             action: "add",
-            user:"", 
+            user:"",
+            userRol: null, 
             newClave:"", 
             nombre:"", 
-            rol:"",
-            deleteId: null,
+            rol:"Administrador",
+            deleteId: null
         }
     }
 
@@ -175,7 +196,8 @@ export default class AdminUsuarios extends React.Component{
             return response.json();
         })
         .then(data=>{
-            this.setState({usuarios: data, loading: false});
+            this.setState({usuarios: data, loading: false,userRol: data.find(d=>d.idUsuario==this.props.userLog).rol});
+
         })
         .catch(e=>{
             console.clear();
@@ -214,6 +236,8 @@ export default class AdminUsuarios extends React.Component{
     };
     
     handleChange = (e) => {
+        console.log(e.target.id);
+        console.log(e.target.value);
         switch (e.target.id) {
             case "txtUser":
             this.setState({user: e.target.value});
@@ -224,7 +248,7 @@ export default class AdminUsuarios extends React.Component{
             case "txtNombre":
             this.setState({nombre: e.target.value});
             break;
-            case "txtRol":
+            default:
             this.setState({rol: e.target.value});
             break;
         }
@@ -273,6 +297,7 @@ export default class AdminUsuarios extends React.Component{
     }
 
     addUser = () =>{
+        console.log(this.state.rol);
         fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/usuario/add`,{
             method: 'POST',
             body: `{
@@ -343,12 +368,12 @@ export default class AdminUsuarios extends React.Component{
             <div className="col">
                 <h1 className="display-4 mb-0 text-white">USUARIOS</h1>
             </div>
-          <div className="col">
-          <Fab size="medium" className="float-right" id="_addUser" onClick={this.handleAddEdit} 
-            color="primary" aria-label="add" component="span"> 
-                <i className="fa fa-plus"></i>
-            </Fab>
-          </div>
+            <div className="col">
+                <Fab size="medium" className="float-right" id="_addUser" onClick={this.handleAddEdit} 
+                color="primary" aria-label="add" component="span"> 
+                    <i className="fa fa-plus"></i>
+                </Fab>
+            </div>
         </div>
         <Card className="animate__animated animate__fadeInDown animate__fast">
             <TableContainer>
@@ -387,9 +412,13 @@ export default class AdminUsuarios extends React.Component{
                                         <IconButton onClick={(event) => this.handleAddEdit(event, usuario.idUsuario)} fontSize="small" aria-label="editar" color="primary" component="span">
                                             <Icon className="fa fa-pencil-square-o" fontSize="small" />
                                         </IconButton>
-                                        <IconButton onClick={(event) => this.handleDelete(event, usuario.idUsuario)} fontSize="small" aria-label="delete" color="primary" component="span">
-                                            <Icon className="fa fa-trash-o" fontSize="small" />
-                                        </IconButton>
+                                        {
+                                            this.state.userRol == "Administrador" ?
+                                                <IconButton onClick={(event) => this.handleDelete(event, usuario.idUsuario)} fontSize="small" aria-label="delete" color="primary" component="span">
+                                                    <Icon className="fa fa-trash-o" fontSize="small" />
+                                                </IconButton> :
+                                                ""
+                                        }
                                     </TableCell>
                                 </TableRow>          
                             );
@@ -408,7 +437,7 @@ export default class AdminUsuarios extends React.Component{
             onChangeRowsPerPage={this.handleChangeRowsPerPage}
             />
         </Card>
-            <AlertConfirmacion deleteUser={this.deleteUser} modalConfirmation={this.state.modalConfirmation} toggleModal={()=>this.toggleModal(this.toggleModal("modalConfirmation"))}/>
+            <AlertConfirmacion deleteId={this.state.deleteId} userLog={this.props.userLog} deleteUser={this.deleteUser} modalConfirmation={this.state.modalConfirmation} toggleModal={()=>this.toggleModal(this.toggleModal("modalConfirmation"))}/>
             <ModalAddEdit usuarioSeleccionado={this.state.usuario_seleccionado} updateUser={this.updateUser} addUser={this.addUser} handleChange={this.handleChange} modalAddEdit={this.state.modalAddEdit} toggleModal={()=>this.toggleModal(this.toggleModal("modalAddEdit"))}/>
         </>);
     }

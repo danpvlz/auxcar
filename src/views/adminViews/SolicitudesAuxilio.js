@@ -9,7 +9,9 @@ import {
     TablePagination,
     TableRow,
     Icon,
-    IconButton
+    IconButton,
+    TableSortLabel,
+    TextField
  } from '@material-ui/core';
 
 import Backdrop from '@material-ui/core/Backdrop';
@@ -18,7 +20,8 @@ import {
     Button,
     Modal,
     Card,
-    Badge
+    Badge,
+    Input
 } from 'reactstrap'
 
 function ModalResponse(props){
@@ -97,15 +100,24 @@ function ModalResponse(props){
             <div className="modal-footer">
             <div className="row">
             <div className="col">
-            <Button className="float-left" onClick={()=>props.cambiarEstado(props.seleccionado.idAuxilio, 1)} block color="primary" type="button">
+            <Button className="float-left" disabled={
+                props.seleccionado.estado.toLowerCase() == "cancelado" || props.seleccionado.estado.toLowerCase() == "facturado" ? 
+                "true" : "false"
+            } onClick={()=>props.cambiarEstado(props.seleccionado.idAuxilio, 1)} block color="primary" type="button">
                 Enviar mecánico
             </Button>
-            <Button className="float-left"  onClick={()=>props.cambiarEstado(props.seleccionado.idAuxilio, 2)} block color="primary" type="button">
+            <Button className="float-left" disabled={
+                props.seleccionado.estado.toLowerCase() == "cancelado" || props.seleccionado.estado.toLowerCase() == "facturado" ? 
+                "true" : "false"
+            }  onClick={()=>props.cambiarEstado(props.seleccionado.idAuxilio, 2)} block color="primary" type="button">
                 Facturar solicitud
             </Button>
             </div>
             <div className="col">
-            <Button className="float-right" onClick={()=>props.cambiarEstado(props.seleccionado.idAuxilio, 3)} block color="danger" type="button">
+            <Button className="float-right" disabled={
+                props.seleccionado.estado.toLowerCase() == "cancelado" || props.seleccionado.estado.toLowerCase() == "facturado" ? 
+                "true" : "false"
+            } onClick={()=>props.cambiarEstado(props.seleccionado.idAuxilio, 3)} block color="danger" type="button">
                 Cancelar solicitud
             </Button>
             </div>
@@ -126,6 +138,8 @@ class SolicitudesAuxilio extends React.Component {
             defaultModal: false,
             username: null,
             open: false,
+            sortAsc: true,
+            filterText: ""
         };
     }
     
@@ -199,6 +213,48 @@ class SolicitudesAuxilio extends React.Component {
         });
     }
 
+    handleSort = () => {
+     var nuevoorden=[];
+        if(this.state.sortAsc){
+            nuevoorden=this.state.solicitudes.sort((a,b)=>new Date(a.fecha.substring(0,2),a.fecha.substring(3,5),a.fecha.substring(6,8)) - new Date(b.fecha.substring(0,2),b.fecha.substring(3,5),b.fecha.substring(6,8)));
+        }else{
+
+            nuevoorden=this.state.solicitudes.sort((a,b)=>new Date(b.fecha.substring(0,2),b.fecha.substring(3,5),b.fecha.substring(6,8)) - new Date(a.fecha.substring(0,2),a.fecha.substring(3,5),a.fecha.substring(6,8)));
+        }
+        this.setState({sortAsc: !this.state.sortAsc,solicitudes:nuevoorden});
+    }
+
+    handleFilter = (e) => {
+        this.setState({filterText: e.target.value});
+    }
+
+    handleDeleteSolicitud = (e,_id) => {
+        fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/solicitudes-auxilio/delete`,{
+            method: 'POST',
+            body: `{
+                "_id": ${_id}
+            }`,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response=>{
+            return response.json();
+        })
+        .then(JSONresponse=>{
+            if(JSONresponse.status==200){
+                this.setState({open: false});
+                this.loadData();
+                //puede ser solo removechild
+            }
+        })
+        .catch((e)=>{
+            console.clear();
+            this.setState({open: true});
+            setTimeout(()=>this.handleDeleteSolicitud(),7000);
+        });
+    }
+
 //hover style={{"cursor": "pointer"}}
     render(){
         return(
@@ -210,6 +266,9 @@ class SolicitudesAuxilio extends React.Component {
             <div className="col">
             <h1 className="display-4 mb-0 text-white">SOLICITUDES DE AUXILIO</h1>
             </div>
+            <div className="col">
+            <Input className="col-sm-6 float-right" onChange={this.handleFilter} placeholder="Filtrar" />
+            </div>
         </div>
         <Card className="animate__animated animate__fadeInDown animate__fast">
             <TableContainer>
@@ -217,7 +276,13 @@ class SolicitudesAuxilio extends React.Component {
                     <TableHead>
                     <TableRow>
                         <TableCell>
+                        <TableSortLabel
+                        active={true}
+                        direction={this.state.sortAsc ? "asc" : "desc"}
+                        onClick={this.handleSort}
+                        >
                         <strong> Fecha </strong>
+                        </TableSortLabel>
                         </TableCell>
                         <TableCell>
                         <strong>Hora</strong>
@@ -244,7 +309,21 @@ class SolicitudesAuxilio extends React.Component {
                     </TableHead>
                     <TableBody>
                     {
-                        this.state.solicitudes.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((solicitud, i)=>{
+                        this.state.solicitudes.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).filter(f=>
+                            {
+                                if(this.state.filterText.length>=3){
+                                    if( f.fecha.toLowerCase().includes(this.state.filterText.toLowerCase())||
+                                    f.hora.toLowerCase().includes(this.state.filterText.toLowerCase()) ||
+                                    f.cliente.toLowerCase().includes(this.state.filterText.toLowerCase()) ||
+                                    f.contacto.toLowerCase().includes(this.state.filterText.toLowerCase()) ||
+                                    f.distrito.toLowerCase().includes(this.state.filterText.toLowerCase()) ||
+                                    f.costo.toString().includes(this.state.filterText.toLowerCase()) ||
+                                    f.estado.toLowerCase().includes(this.state.filterText.toLowerCase())){return f}
+                                }else{
+                                    return f
+                                }
+                            }
+                            ).map((solicitud, i)=>{
                             var color = "primary";
                             switch (solicitud.estado.toLowerCase()) {
                                 case 'pendiente':
@@ -288,6 +367,9 @@ class SolicitudesAuxilio extends React.Component {
                                     <TableCell>
                                         <IconButton onClick={(event) => this.handleClickRow(event, solicitud.idAuxilio)} fontSize="small" aria-label="detalles" color="primary" component="span">
                                             <Icon className="fa fa-eye" fontSize="small" />
+                                        </IconButton>
+                                        <IconButton onClick={(event) => this.handleDeleteSolicitud(event, solicitud.idAuxilio)} fontSize="small" aria-label="delete" color="primary" component="span">
+                                            <Icon className="fa fa-trash-o" fontSize="small" />
                                         </IconButton>
                                     </TableCell>
                                 </TableRow>          

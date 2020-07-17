@@ -4,7 +4,8 @@ import {
     Card,
     Modal,
     Button,
-    FormGroup
+    FormGroup,
+    Badge
 } from 'reactstrap'
 
 import {
@@ -20,7 +21,8 @@ import {
     Icon,
     IconButton,
     TextField,
-    InputAdornment
+    InputAdornment,
+    MenuItem
 } from '@material-ui/core';
 
 import NumberFormat from 'react-number-format';
@@ -75,6 +77,24 @@ function ModalEdit(props){
                         id="txtCosto"
                         customInput={TextField} label="Costo" />
                 </FormGroup>
+                <FormGroup>
+                    <TextField
+                        defaultValue={props.distritoSeleccionado.estado}
+                        select
+                        label="Estado"
+                        autoComplete="off"
+                        onChange={props.handleChange}
+                        fullWidth
+                        id="txtEstado"
+                        >
+                        <MenuItem value="1">
+                        Habilitado
+                        </MenuItem>
+                        <MenuItem value="0">
+                        Desabilitado
+                        </MenuItem>
+                        </TextField>
+                </FormGroup>
             </div>
             <div className="modal-footer">
                 <div className="col-sm text-center">
@@ -98,11 +118,12 @@ export default class Distritos extends React.Component{
             rowsPerPage: 10,
             modalEdit: false,
             costo: 0,
+            estado: null
         }
     }
 
     loadData = () => {
-        fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/distrito`)
+        fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/distrito/all`)
         .then(response=>{
             return response.json();
         })
@@ -126,7 +147,7 @@ export default class Distritos extends React.Component{
 
     handleClickRow = (e,n) => {
         let distrito = this.state.distritos.slice().find(d=>d.value==n);
-        this.setState({distrito_seleccionado: distrito, costo:distrito.costo}); 
+        this.setState({distrito_seleccionado: distrito, costo:distrito.costo, estado:distrito.estado}); 
         this.toggleModal();
     }
 
@@ -141,6 +162,9 @@ export default class Distritos extends React.Component{
             case "txtCosto":
             this.setState({costo: e.target.value});
             break;
+            default:
+            this.setState({estado: e.target.value});
+            break;
         }
     };
 
@@ -151,7 +175,8 @@ export default class Distritos extends React.Component{
             method: 'POST',
             body: `{
                 "_id": ${_id},
-                "costo": ${this.state.costo}
+                "costo": ${this.state.costo},
+                "estado": ${this.state.estado}
             }`,
             headers: {
                 'Content-Type': 'application/json'
@@ -203,6 +228,9 @@ export default class Distritos extends React.Component{
                         <strong>Costo</strong>
                         </TableCell>
                         <TableCell>
+                        <strong>Estado</strong>
+                        </TableCell>
+                        <TableCell>
                         <strong>Editar</strong>
                         </TableCell>
                     </TableRow>
@@ -233,6 +261,11 @@ export default class Distritos extends React.Component{
                                     </TableCell>
                                     <TableCell>
                                         S/. {distrito.costo}
+                                    </TableCell>
+                                    <TableCell>
+                                    <Badge className="text-uppercase" color={distrito.estado == 1 ? "success" : "danger"} pill>
+                                        {distrito.estado == 1 ? "Habilitado" : "Desabilitado"}
+                                    </Badge>
                                     </TableCell>
                                     <TableCell>
                                         <IconButton onClick={(event) => this.handleClickRow(event, distrito.value)} fontSize="small" aria-label="modificar" color="primary" component="span">
