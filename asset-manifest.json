@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/auxcar/static/css/main.d2bab01d.chunk.css",
-    "main.js": "/auxcar/static/js/main.6ad28759.chunk.js",
-    "main.js.map": "/auxcar/static/js/main.6ad28759.chunk.js.map",
+    "main.js": "/auxcar/static/js/main.a4155829.chunk.js",
+    "main.js.map": "/auxcar/static/js/main.a4155829.chunk.js.map",
     "runtime-main.js": "/auxcar/static/js/runtime-main.3a6a84b8.js",
     "runtime-main.js.map": "/auxcar/static/js/runtime-main.3a6a84b8.js.map",
     "static/css/2.e2dd9b0a.chunk.css": "/auxcar/static/css/2.e2dd9b0a.chunk.css",
     "static/js/2.bdf6310c.chunk.js": "/auxcar/static/js/2.bdf6310c.chunk.js",
     "static/js/2.bdf6310c.chunk.js.map": "/auxcar/static/js/2.bdf6310c.chunk.js.map",
     "index.html": "/auxcar/index.html",
-    "precache-manifest.fc56ded0e7f5554df10863845666b76a.js": "/auxcar/precache-manifest.fc56ded0e7f5554df10863845666b76a.js",
+    "precache-manifest.12ffbce4682dfe65f3f3dd3b55705ec7.js": "/auxcar/precache-manifest.12ffbce4682dfe65f3f3dd3b55705ec7.js",
     "service-worker.js": "/auxcar/service-worker.js",
     "static/css/2.e2dd9b0a.chunk.css.map": "/auxcar/static/css/2.e2dd9b0a.chunk.css.map",
     "static/css/main.d2bab01d.chunk.css.map": "/auxcar/static/css/main.d2bab01d.chunk.css.map",
@@ -25,6 +25,6 @@
     "static/css/2.e2dd9b0a.chunk.css",
     "static/js/2.bdf6310c.chunk.js",
     "static/css/main.d2bab01d.chunk.css",
-    "static/js/main.6ad28759.chunk.js"
+    "static/js/main.a4155829.chunk.js"
   ]
 }
