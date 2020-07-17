@@ -102,13 +102,13 @@ function ModalResponse(props){
             <div className="col">
             <Button className="float-left" disabled={
                 props.seleccionado.estado.toLowerCase() == "cancelado" || props.seleccionado.estado.toLowerCase() == "facturado" ? 
-                "true" : "false"
+                true : false
             } onClick={()=>props.cambiarEstado(props.seleccionado.idAuxilio, 1)} block color="primary" type="button">
                 Enviar mecánico
             </Button>
             <Button className="float-left" disabled={
                 props.seleccionado.estado.toLowerCase() == "cancelado" || props.seleccionado.estado.toLowerCase() == "facturado" ? 
-                "true" : "false"
+                true : false
             }  onClick={()=>props.cambiarEstado(props.seleccionado.idAuxilio, 2)} block color="primary" type="button">
                 Facturar solicitud
             </Button>
@@ -116,7 +116,7 @@ function ModalResponse(props){
             <div className="col">
             <Button className="float-right" disabled={
                 props.seleccionado.estado.toLowerCase() == "cancelado" || props.seleccionado.estado.toLowerCase() == "facturado" ? 
-                "true" : "false"
+                true : false
             } onClick={()=>props.cambiarEstado(props.seleccionado.idAuxilio, 3)} block color="danger" type="button">
                 Cancelar solicitud
             </Button>
