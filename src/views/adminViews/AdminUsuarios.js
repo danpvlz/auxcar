@@ -191,7 +191,7 @@ export default class AdminUsuarios extends React.Component{
     }
 
     loadData = () => {
-        fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/usuario`,{method: 'POST'})
+        fetch(`https://app-23561c51-1d5c-4854-a6b1-b85f684e253c.cleverapps.io/api/usuario`,{method: 'POST'})
         .then(response=>{
             return response.json();
         })
@@ -272,7 +272,7 @@ export default class AdminUsuarios extends React.Component{
             }`;
         }
 
-        fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/usuario/edit`,{
+        fetch(`https://app-23561c51-1d5c-4854-a6b1-b85f684e253c.cleverapps.io/api/usuario/edit`,{
             method: 'POST',
             body: body,
             headers: {
@@ -298,7 +298,7 @@ export default class AdminUsuarios extends React.Component{
 
     addUser = () =>{
         console.log(this.state.rol);
-        fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/usuario/add`,{
+        fetch(`https://app-23561c51-1d5c-4854-a6b1-b85f684e253c.cleverapps.io/api/usuario/add`,{
             method: 'POST',
             body: `{
                 "user": "${this.state.user}",
@@ -328,7 +328,7 @@ export default class AdminUsuarios extends React.Component{
     }
 
     deleteUser = () =>{
-        fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/usuario/delete`,{
+        fetch(`https://app-23561c51-1d5c-4854-a6b1-b85f684e253c.cleverapps.io/api/usuario/delete`,{
             method: 'POST',
             body: `{
                 "_id": ${this.state.deleteId}

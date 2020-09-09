@@ -123,7 +123,7 @@ export default class Distritos extends React.Component{
     }
 
     loadData = () => {
-        fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/distrito/all`)
+        fetch(`https://app-23561c51-1d5c-4854-a6b1-b85f684e253c.cleverapps.io/api/distrito/all`)
         .then(response=>{
             return response.json();
         })
@@ -171,7 +171,7 @@ export default class Distritos extends React.Component{
     updateDistrito = (_id) =>{
         console.log(_id);
         console.log(this.state.costo);
-        fetch(`https://app-5588aec6-1c6c-4e24-93ee-31bb3a4c1c21.cleverapps.io/api/distrito/edit`,{
+        fetch(`https://app-23561c51-1d5c-4854-a6b1-b85f684e253c.cleverapps.io/api/distrito/edit`,{
             method: 'POST',
             body: `{
                 "_id": ${_id},
