@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d5e981b8255fdb15512f1e984618c9d3",
+    "revision": "7da23ce0149df462545123a8ee018e6d",
     "url": "/auxcar/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/auxcar/static/css/2.2ce0d9b2.chunk.css"
   },
   {
-    "revision": "0319fded62dc71652fe3",
+    "revision": "7f01bc33bf7cae21dbdd",
     "url": "/auxcar/static/css/main.259c5982.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/auxcar/static/js/2.045e5ba3.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "0319fded62dc71652fe3",
-    "url": "/auxcar/static/js/main.d294554d.chunk.js"
+    "revision": "7f01bc33bf7cae21dbdd",
+    "url": "/auxcar/static/js/main.c7c03ad9.chunk.js"
   },
   {
     "revision": "6f6c124568ab213a1fdd",
