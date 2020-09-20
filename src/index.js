@@ -109,32 +109,7 @@ class App extends React.Component{
               <Container className="align-items-center">
                 {
                   this.state.username ? 
-                  <Switch>
-                    <Route 
-                    path="/"
-                    exact
-                    render={props => <SolicitudesAuxilio {...props} />}
-                    />
-
-                  <Route 
-                    path="/usuarios"
-                    exact
-                    render={props => <AdminUsuarios userLog={this.state.sesionId} {...props} />}
-                    />
-                    
-                  <Route 
-                    path="/fallas-vehiculares"
-                    exact
-                    render={props => <FallasVehiculares {...props} />}
-                    />
-                    
-                    <Route 
-                      path="/distritos"
-                      exact
-                      render={props => <Distritos {...props} />}
-                      />
-                    <Redirect to="/" />
-                  </Switch>
+                  <AdminAccesos userRol={this.state.userRol.toLowerCase()} userLog={this.state.sesionId}/>   
                   :
                   <Switch>
                     <Route path="/" exact render={props => <Inicio {...props} />} />
@@ -190,5 +165,47 @@ class App extends React.Component{
   }
 }
 
+function AdminAccesos(params){
+  if(params.userRol=="administrador"){
+    return(<Switch>
+        <Route 
+          path="/"
+          exact
+          render={props => <SolicitudesAuxilio {...props} />}
+          />
+
+        <Route 
+          path="/usuarios"
+          exact
+          render={props => <AdminUsuarios userLog={params.userLog} {...props} />}
+          />
+          
+        <Route 
+          path="/fallas-vehiculares"
+          exact
+          render={props => <FallasVehiculares {...props} />}
+          />
+          
+        <Route 
+          path="/distritos"
+          exact
+          render={props => <Distritos {...props} />}
+          />
+                  
+        <Redirect to="/" />
+      </Switch>)
+  }else{
+    return(<Switch>
+      <Route 
+        path="/"
+        exact
+        render={props => <SolicitudesAuxilio {...props} />}
+        />
+        
+      <Redirect to="/" />
+    </Switch>)
+  }
+  
+}
 
 render(<App />, document.getElementById("root"));
