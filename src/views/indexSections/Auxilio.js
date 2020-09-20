@@ -72,7 +72,7 @@ class Auxilio extends React.Component {
   }
 
   saveAuxilio = (insertedId) => {
-    fetch("https://app-23561c51-1d5c-4854-a6b1-b85f684e253c.cleverapps.io/api/auxilio",
+    fetch(`${process.env.REACT_APP_API_SERVICE}/api/auxilio`,
     {
       method: 'POST',
       body: `
@@ -109,7 +109,7 @@ class Auxilio extends React.Component {
   }
 
   saveDiagnostico = () => {
-    fetch(`https://app-23561c51-1d5c-4854-a6b1-b85f684e253c.cleverapps.io/api/diagnostico`, {
+    fetch(`${process.env.REACT_APP_API_SERVICE}/api/diagnostico`, {
           method: 'POST',
           body: `{
               "distrito": ${this.props.location.codDistrito},

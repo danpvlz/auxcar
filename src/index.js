@@ -1,4 +1,3 @@
-
 import React from "react";
 import {render} from "react-dom";
 import { Route, Switch, Redirect, HashRouter  } from "react-router-dom";
@@ -19,7 +18,6 @@ import AdminUsuarios from 'views/adminViews/AdminUsuarios.js'
 import FallasVehiculares from 'views/adminViews/FallasVehiculares.js'
 import Distritos from 'views/adminViews/Distritos.js'
 
-import IdleTimer from 'react-idle-timer'
 import {  
   Container
 } from "reactstrap";
@@ -41,7 +39,6 @@ class App extends React.Component{
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
-    this.refs.main.scrollTop = 0;
   }
 
   logOut=()=>{
@@ -52,11 +49,10 @@ class App extends React.Component{
 
   logIn=(user,password,recordar)=>{
     this.authentication(user,password,recordar);
-    //setTimeout(()=>{this.logOut();},10000);
   }
 
   authentication = (user,password,recordar) => {
-    fetch(`https://app-23561c51-1d5c-4854-a6b1-b85f684e253c.cleverapps.io/api/auth`,{
+    fetch(`${process.env.REACT_APP_API_SERVICE}/api/auth`,{
           method: 'POST',
           body: `{
               "user": "${user}",

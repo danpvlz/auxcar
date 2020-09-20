@@ -148,7 +148,7 @@ class SolicitudesAuxilio extends React.Component {
     }
     
     loadData = () => {
-        fetch(`https://app-23561c51-1d5c-4854-a6b1-b85f684e253c.cleverapps.io/api/solicitudes-auxilio`, {method: 'POST'})
+        fetch(`${process.env.REACT_APP_API_SERVICE}/api/solicitudes-auxilio`, {method: 'POST'})
         .then((response)=>{
             return response.json();
         })
@@ -186,7 +186,7 @@ class SolicitudesAuxilio extends React.Component {
     };
 
     cambiarEstado = (_id, estado) =>{
-        fetch(`https://app-23561c51-1d5c-4854-a6b1-b85f684e253c.cleverapps.io/api/solicitudes-auxilio/actualizar-estado/`,{
+        fetch(`${process.env.REACT_APP_API_SERVICE}/api/solicitudes-auxilio/actualizar-estado/`,{
             method: 'POST',
             body: `{
                 "_id": ${_id},
@@ -229,7 +229,7 @@ class SolicitudesAuxilio extends React.Component {
     }
 
     handleDeleteSolicitud = (e,_id) => {
-        fetch(`https://app-23561c51-1d5c-4854-a6b1-b85f684e253c.cleverapps.io/api/solicitudes-auxilio/delete`,{
+        fetch(`${process.env.REACT_APP_API_SERVICE}/api/solicitudes-auxilio/delete`,{
             method: 'POST',
             body: `{
                 "_id": ${_id}

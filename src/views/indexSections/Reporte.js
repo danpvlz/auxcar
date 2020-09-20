@@ -30,7 +30,7 @@ class Reporte extends React.Component {
   }
   
   init=()=>{
-    fetch(`https://app-23561c51-1d5c-4854-a6b1-b85f684e253c.cleverapps.io/api/fallas-vehiculares`, {
+    fetch(`${process.env.REACT_APP_API_SERVICE}/api/fallas-vehiculares`, {
       method: 'POST',
       body: `{
         "fallas": [${this.props.location.fallas_identificadas.toString()}]
