@@ -20,6 +20,26 @@ import {
   ListSubheader
 } from '@material-ui/core';
 
+function Mantenimientos(props){
+  return (<>
+    <ListSubheader component="div" id="nested-list-subheader">
+      Mantenimientos
+    </ListSubheader>
+    <ListItem button onClick={props.handleDrawerOpen} component={Link} to='/usuarios'>
+      <ListItemIcon  style={{"minWidth": 40}}><i className="fa fa-users"></i></ListItemIcon>
+      <ListItemText  primary="Usuarios" />
+    </ListItem>
+    <ListItem button onClick={props.handleDrawerOpen} component={Link} to='/fallas-vehiculares'>
+      <ListItemIcon style={{"minWidth": 40}}><i className="fa fa-list-alt"></i></ListItemIcon>
+      <ListItemText primary="Fallas vehiculares" />
+    </ListItem>
+    <ListItem button onClick={props.handleDrawerOpen} component={Link} to='/distritos'>
+      <ListItemIcon style={{"minWidth": 40}}><i className="fa fa-location-arrow"></i></ListItemIcon>
+      <ListItemText primary="Distritos" />
+    </ListItem>
+  </>);
+}
+
 class DemoNavbar extends React.Component {
   constructor(){
     super();
@@ -114,21 +134,12 @@ class DemoNavbar extends React.Component {
           <ListItemIcon  style={{"minWidth": 40}}><i className="fa fa-bell"></i></ListItemIcon>
           <ListItemText primary="Solicitudes de auxilio" />
         </ListItem>
-          <ListSubheader component="div" id="nested-list-subheader">
-            Mantenimientos
-          </ListSubheader>
-          <ListItem button onClick={this.handleDrawerOpen} component={Link} to='/usuarios'>
-            <ListItemIcon  style={{"minWidth": 40}}><i className="fa fa-users"></i></ListItemIcon>
-            <ListItemText  primary="Usuarios" />
-          </ListItem>
-          <ListItem button onClick={this.handleDrawerOpen} component={Link} to='/fallas-vehiculares'>
-            <ListItemIcon style={{"minWidth": 40}}><i className="fa fa-list-alt"></i></ListItemIcon>
-            <ListItemText primary="Fallas vehiculares" />
-          </ListItem>
-          <ListItem button onClick={this.handleDrawerOpen} component={Link} to='/distritos'>
-            <ListItemIcon style={{"minWidth": 40}}><i className="fa fa-location-arrow"></i></ListItemIcon>
-            <ListItemText primary="Distritos" />
-          </ListItem>
+        {
+          this.props.rol && this.props.rol.toLowerCase()=="administrador" ?  
+          <Mantenimientos handleDrawerOpen={this.handleDrawerOpen} />
+          :
+          ""      
+        }
         </List>
         <List style={{
           "position": "absolute",
@@ -148,19 +159,3 @@ class DemoNavbar extends React.Component {
 }
 
 export default DemoNavbar;
-
-/*
-
-
-        <div style={{
-          "display": 'flex',
-          "alignItems": 'center',
-          "justifyContent": 'flex-center',
-        }}>
-          <IconButton onClick={this.handleDrawerOpen} component="span">
-            <div className="icon icon-md icon-shape">
-              <i className="fa fa-chevron-right text-primary"></i>
-            </div>
-          </IconButton>
-        </div>
- */

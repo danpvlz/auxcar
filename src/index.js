@@ -33,7 +33,8 @@ class App extends React.Component{
       username: null,
       loading: false,
       sesion: false,
-      error: false
+      error: false,
+      userRol: null
     }
   }
   componentDidMount() {
@@ -44,7 +45,7 @@ class App extends React.Component{
   logOut=()=>{
     localStorage.removeItem("auxcar_auth_user"); 
     localStorage.removeItem("auxcar_auth_sesionId"); 
-    this.setState({username: null, sesion:false,sesionId:null});
+    this.setState({username: null, sesion:false,sesionId:null,userrRol:null});
   }
 
   logIn=(user,password,recordar)=>{
@@ -68,8 +69,9 @@ class App extends React.Component{
           if(usuario!=undefined){
               this.setState({sesion: true, error: false});
               if(recordar){localStorage.setItem("auxcar_auth_user",usuario.nombre);
-                          localStorage.setItem("auxcar_auth_sesionId",usuario.idUsuario);}
-              setTimeout(()=>this.setState({loading:false, username: usuario.nombre,sesionId: usuario.idUsuario}),500);
+                          localStorage.setItem("auxcar_auth_sesionId",usuario.idUsuario);
+                          localStorage.setItem("auxcar_auth_userRol",usuario.rol);}
+              setTimeout(()=>this.setState({loading:false, username: usuario.nombre,sesionId: usuario.idUsuario, userRol:usuario.rol}),500);
           }else{
             this.setState({error: true});
           }
@@ -83,15 +85,16 @@ class App extends React.Component{
   componentWillMount(){
     let user_ls = localStorage.getItem("auxcar_auth_user");
     let sesionId = localStorage.getItem("auxcar_auth_sesionId");
+    let userRol = localStorage.getItem("auxcar_auth_userRol");
     if(user_ls){
-      this.setState({username: user_ls,sesionId:sesionId});
+      this.setState({username: user_ls,sesionId:sesionId,userRol:userRol});
     }
   }
 
   render(){
     return(
       <HashRouter hashType="noslash" >
-        <DemoNavbar username={this.state.username} logOut={this.logOut}/>
+        <DemoNavbar username={this.state.username} rol={this.state.userRol} logOut={this.logOut}/>
         <main ref="main" >
           <div className="position-relative"  >
           <div className="shape shape-style-1 bg-default position-fixed" style={{"zIndex": -1}}>

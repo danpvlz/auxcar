@@ -101,7 +101,7 @@ function ModalResponse(props){
             <div className="row">
             <div className="col">
             <Button className="float-left" disabled={
-                props.seleccionado.estado.toLowerCase() == "cancelado" || props.seleccionado.estado.toLowerCase() == "facturado" ? 
+                props.seleccionado.estado.toLowerCase() == "cancelado" || props.seleccionado.estado.toLowerCase() == "facturado" || props.seleccionado.estado.toLowerCase() == "en camino" ? 
                 true : false
             } onClick={()=>props.cambiarEstado(props.seleccionado.idAuxilio, 1)} block color="primary" type="button">
                 Enviar mecánico
