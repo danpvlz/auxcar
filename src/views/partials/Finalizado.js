@@ -10,7 +10,7 @@ import {
     Col
 } from 'reactstrap'
 
-class ResultadoEncuesta extends React.Component {
+class Finalizado extends React.Component {
   render() {
     return (
       <Col lg="5">
@@ -42,5 +42,5 @@ class ResultadoEncuesta extends React.Component {
   }
 }
 
-export default ResultadoEncuesta;
+export default Finalizado;
                   
