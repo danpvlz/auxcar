@@ -123,7 +123,7 @@ export default class Distritos extends React.Component{
     }
 
     loadData = () => {
-        fetch(`${process.env.REACT_APP_API_SERVICE}/api/distrito/all`)
+        fetch(`https://rest-api-auxcar.cloudno.de/api/distrito/all`)
         .then(response=>{
             return response.json();
         })
@@ -171,7 +171,7 @@ export default class Distritos extends React.Component{
     updateDistrito = (_id) =>{
         console.log(_id);
         console.log(this.state.costo);
-        fetch(`${process.env.REACT_APP_API_SERVICE}/api/distrito/edit`,{
+        fetch(`https://rest-api-auxcar.cloudno.de/api/distrito/edit`,{
             method: 'POST',
             body: `{
                 "_id": ${_id},

@@ -148,7 +148,7 @@ class SolicitudesAuxilio extends React.Component {
     }
     
     loadData = () => {
-        fetch(`${process.env.REACT_APP_API_SERVICE}/api/solicitudes-auxilio`, {method: 'POST'})
+        fetch(`https://rest-api-auxcar.cloudno.de/api/solicitudes-auxilio`, {method: 'POST'})
         .then((response)=>{
             return response.json();
         })
@@ -186,7 +186,7 @@ class SolicitudesAuxilio extends React.Component {
     };
 
     cambiarEstado = (_id, estado) =>{
-        fetch(`${process.env.REACT_APP_API_SERVICE}/api/solicitudes-auxilio/actualizar-estado/`,{
+        fetch(`https://rest-api-auxcar.cloudno.de/api/solicitudes-auxilio/actualizar-estado/`,{
             method: 'POST',
             body: `{
                 "_id": ${_id},
@@ -229,7 +229,7 @@ class SolicitudesAuxilio extends React.Component {
     }
 
     handleDeleteSolicitud = (e,_id) => {
-        fetch(`${process.env.REACT_APP_API_SERVICE}/api/solicitudes-auxilio/delete`,{
+        fetch(`https://rest-api-auxcar.cloudno.de/api/solicitudes-auxilio/delete`,{
             method: 'POST',
             body: `{
                 "_id": ${_id}

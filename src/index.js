@@ -53,7 +53,7 @@ class App extends React.Component{
   }
 
   authentication = (user,password,recordar) => {
-    fetch(`${process.env.REACT_APP_API_SERVICE}/api/auth`,{
+    fetch(`https://rest-api-auxcar.cloudno.de/api/auth`,{
           method: 'POST',
           body: `{
               "user": "${user}",

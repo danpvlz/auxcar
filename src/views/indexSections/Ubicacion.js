@@ -47,7 +47,7 @@ class Ubicacion extends React.Component {
   }
 
   loadData = () => {
-    fetch(`${process.env.REACT_APP_API_SERVICE}/api/distrito`)
+    fetch(`https://rest-api-auxcar.cloudno.de/api/distrito`)
     .then(response=>{
         return response.json();
     })

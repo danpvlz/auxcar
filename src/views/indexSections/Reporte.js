@@ -30,7 +30,7 @@ class Reporte extends React.Component {
   }
   
   init=()=>{
-    fetch(`${process.env.REACT_APP_API_SERVICE}/api/fallas-vehiculares`, {
+    fetch(`https://rest-api-auxcar.cloudno.de/api/fallas-vehiculares`, {
       method: 'POST',
       body: `{
         "fallas": [${this.props.location.fallas_identificadas.toString()}]

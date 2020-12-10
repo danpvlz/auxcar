@@ -191,7 +191,7 @@ export default class AdminUsuarios extends React.Component{
     }
 
     loadData = () => {
-        fetch(`${process.env.REACT_APP_API_SERVICE}/api/usuario`,{method: 'POST'})
+        fetch(`https://rest-api-auxcar.cloudno.de/api/usuario`,{method: 'POST'})
         .then(response=>{
             return response.json();
         })
@@ -272,7 +272,7 @@ export default class AdminUsuarios extends React.Component{
             }`;
         }
 
-        fetch(`${process.env.REACT_APP_API_SERVICE}/api/usuario/edit`,{
+        fetch(`https://rest-api-auxcar.cloudno.de/api/usuario/edit`,{
             method: 'POST',
             body: body,
             headers: {
@@ -298,7 +298,7 @@ export default class AdminUsuarios extends React.Component{
 
     addUser = () =>{
         console.log(this.state.rol);
-        fetch(`${process.env.REACT_APP_API_SERVICE}/api/usuario/add`,{
+        fetch(`https://rest-api-auxcar.cloudno.de/api/usuario/add`,{
             method: 'POST',
             body: `{
                 "user": "${this.state.user}",
@@ -328,7 +328,7 @@ export default class AdminUsuarios extends React.Component{
     }
 
     deleteUser = () =>{
-        fetch(`${process.env.REACT_APP_API_SERVICE}/api/usuario/delete`,{
+        fetch(`https://rest-api-auxcar.cloudno.de/api/usuario/delete`,{
             method: 'POST',
             body: `{
                 "_id": ${this.state.deleteId}

@@ -72,7 +72,7 @@ class Auxilio extends React.Component {
   }
 
   saveAuxilio = (insertedId) => {
-    fetch(`${process.env.REACT_APP_API_SERVICE}/api/auxilio`,
+    fetch(`https://rest-api-auxcar.cloudno.de/api/auxilio`,
     {
       method: 'POST',
       body: `
@@ -109,7 +109,7 @@ class Auxilio extends React.Component {
   }
 
   saveDiagnostico = () => {
-    fetch(`${process.env.REACT_APP_API_SERVICE}/api/diagnostico`, {
+    fetch(`https://rest-api-auxcar.cloudno.de/api/diagnostico`, {
           method: 'POST',
           body: `{
               "distrito": ${this.props.location.codDistrito},
