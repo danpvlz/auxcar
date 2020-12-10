@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "62ebc228e2a59a5cf35e9259472ed16f",
+    "revision": "e022196347a03fd6964ab8ee51b829c1",
     "url": "/auxcar/index.html"
   },
   {
-    "revision": "010110161bae3f2d1975",
+    "revision": "26fd901f3b74fc79b261",
     "url": "/auxcar/static/css/2.2ce0d9b2.chunk.css"
   },
   {
-    "revision": "69d2a23bfeffbec0e605",
+    "revision": "186c700a36eded5d2ce0",
     "url": "/auxcar/static/css/main.259c5982.chunk.css"
   },
   {
-    "revision": "010110161bae3f2d1975",
-    "url": "/auxcar/static/js/2.045e5ba3.chunk.js"
+    "revision": "26fd901f3b74fc79b261",
+    "url": "/auxcar/static/js/2.a6df2798.chunk.js"
   },
   {
-    "revision": "5716c5f04d63e7c760d0dfd27959d648",
-    "url": "/auxcar/static/js/2.045e5ba3.chunk.js.LICENSE.txt"
+    "revision": "86c879e9bc5a9ccbfdcc20ea7e4aaef4",
+    "url": "/auxcar/static/js/2.a6df2798.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "69d2a23bfeffbec0e605",
-    "url": "/auxcar/static/js/main.1b0673d7.chunk.js"
+    "revision": "186c700a36eded5d2ce0",
+    "url": "/auxcar/static/js/main.2eb92209.chunk.js"
   },
   {
     "revision": "6f6c124568ab213a1fdd",
