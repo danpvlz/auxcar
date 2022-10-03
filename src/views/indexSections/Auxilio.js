@@ -11,6 +11,7 @@ import Finalizado from "../partials/Finalizado";
 
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { URI_REST } from "utils/global";
 
 class Auxilio extends React.Component {
     constructor(){
@@ -72,7 +73,7 @@ class Auxilio extends React.Component {
   }
 
   saveAuxilio = (insertedId) => {
-    fetch(`https://rest-api-auxcar.cloudno.de/api/auxilio`,
+    fetch(`${URI_REST}/api/auxilio`,
     {
       method: 'POST',
       body: `
@@ -109,7 +110,7 @@ class Auxilio extends React.Component {
   }
 
   saveDiagnostico = () => {
-    fetch(`https://rest-api-auxcar.cloudno.de/api/diagnostico`, {
+    fetch(`${URI_REST}/api/diagnostico`, {
           method: 'POST',
           body: `{
               "distrito": ${this.props.location.codDistrito},

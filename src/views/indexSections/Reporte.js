@@ -11,6 +11,7 @@ import {
   CardBody,
   Button
 } from "reactstrap";
+import { URI_REST } from "utils/global";
 
 class Reporte extends React.Component {
     state = {
@@ -30,7 +31,7 @@ class Reporte extends React.Component {
   }
   
   init=()=>{
-    fetch(`https://rest-api-auxcar.cloudno.de/api/fallas-vehiculares`, {
+    fetch(`${URI_REST}/api/fallas-vehiculares`, {
       method: 'POST',
       body: `{
         "fallas": [${this.props.location.fallas_identificadas.toString()}]

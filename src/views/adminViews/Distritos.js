@@ -26,6 +26,7 @@ import {
 } from '@material-ui/core';
 
 import NumberFormat from 'react-number-format';
+import { URI_REST } from 'utils/global';
 function ModalEdit(props){
     var provincia = "";
     switch (parseInt(props.distritoSeleccionado.provincia)) {
@@ -123,7 +124,7 @@ export default class Distritos extends React.Component{
     }
 
     loadData = () => {
-        fetch(`https://rest-api-auxcar.cloudno.de/api/distrito/all`)
+        fetch(`${URI_REST}/api/distrito/all`)
         .then(response=>{
             return response.json();
         })
@@ -171,7 +172,7 @@ export default class Distritos extends React.Component{
     updateDistrito = (_id) =>{
         console.log(_id);
         console.log(this.state.costo);
-        fetch(`https://rest-api-auxcar.cloudno.de/api/distrito/edit`,{
+        fetch(`${URI_REST}/api/distrito/edit`,{
             method: 'POST',
             body: `{
                 "_id": ${_id},

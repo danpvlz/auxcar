@@ -1,0 +1,1 @@
+export const URI_REST="https://app-23561c51-1d5c-4854-a6b1-b85f684e253c.cleverapps.io"

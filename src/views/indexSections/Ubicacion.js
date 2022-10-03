@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 
 import Select from "react-select";
+import { URI_REST } from "utils/global";
 
 class Ubicacion extends React.Component {
   constructor(){
@@ -47,7 +48,7 @@ class Ubicacion extends React.Component {
   }
 
   loadData = () => {
-    fetch(`https://rest-api-auxcar.cloudno.de/api/distrito`)
+    fetch(`${URI_REST}/api/distrito`)
     .then(response=>{
         return response.json();
     })

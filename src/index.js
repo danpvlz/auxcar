@@ -23,6 +23,7 @@ import {
 } from "reactstrap";
 
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
+import { URI_REST } from "utils/global";
 
 //<Redirect to="/" />
 class App extends React.Component{
@@ -53,7 +54,7 @@ class App extends React.Component{
   }
 
   authentication = (user,password,recordar) => {
-    fetch(`https://rest-api-auxcar.cloudno.de/api/auth`,{
+    fetch(`${URI_REST}/api/auth`,{
           method: 'POST',
           body: `{
               "user": "${user}",

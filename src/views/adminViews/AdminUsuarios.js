@@ -24,6 +24,7 @@ import {
     Fab,
     MenuItem
 } from '@material-ui/core';
+import { URI_REST } from 'utils/global';
 
 function AlertConfirmacion(props){
     return(<>
@@ -191,7 +192,7 @@ export default class AdminUsuarios extends React.Component{
     }
 
     loadData = () => {
-        fetch(`https://rest-api-auxcar.cloudno.de/api/usuario`,{method: 'POST'})
+        fetch(`${URI_REST}/api/usuario`,{method: 'POST'})
         .then(response=>{
             return response.json();
         })
@@ -272,7 +273,7 @@ export default class AdminUsuarios extends React.Component{
             }`;
         }
 
-        fetch(`https://rest-api-auxcar.cloudno.de/api/usuario/edit`,{
+        fetch(`${URI_REST}/api/usuario/edit`,{
             method: 'POST',
             body: body,
             headers: {
@@ -298,7 +299,7 @@ export default class AdminUsuarios extends React.Component{
 
     addUser = () =>{
         console.log(this.state.rol);
-        fetch(`https://rest-api-auxcar.cloudno.de/api/usuario/add`,{
+        fetch(`${URI_REST}/api/usuario/add`,{
             method: 'POST',
             body: `{
                 "user": "${this.state.user}",
@@ -328,7 +329,7 @@ export default class AdminUsuarios extends React.Component{
     }
 
     deleteUser = () =>{
-        fetch(`https://rest-api-auxcar.cloudno.de/api/usuario/delete`,{
+        fetch(`${URI_REST}/api/usuario/delete`,{
             method: 'POST',
             body: `{
                 "_id": ${this.state.deleteId}

@@ -23,6 +23,7 @@ import {
     Badge,
     Input
 } from 'reactstrap'
+import { URI_REST } from "utils/global";
 
 function ModalResponse(props){
     return(
@@ -148,7 +149,7 @@ class SolicitudesAuxilio extends React.Component {
     }
     
     loadData = () => {
-        fetch(`https://rest-api-auxcar.cloudno.de/api/solicitudes-auxilio`, {method: 'POST'})
+        fetch(`${URI_REST}/api/solicitudes-auxilio`, {method: 'POST'})
         .then((response)=>{
             return response.json();
         })
@@ -186,7 +187,7 @@ class SolicitudesAuxilio extends React.Component {
     };
 
     cambiarEstado = (_id, estado) =>{
-        fetch(`https://rest-api-auxcar.cloudno.de/api/solicitudes-auxilio/actualizar-estado/`,{
+        fetch(`${URI_REST}/api/solicitudes-auxilio/actualizar-estado/`,{
             method: 'POST',
             body: `{
                 "_id": ${_id},
@@ -229,7 +230,7 @@ class SolicitudesAuxilio extends React.Component {
     }
 
     handleDeleteSolicitud = (e,_id) => {
-        fetch(`https://rest-api-auxcar.cloudno.de/api/solicitudes-auxilio/delete`,{
+        fetch(`${URI_REST}/api/solicitudes-auxilio/delete`,{
             method: 'POST',
             body: `{
                 "_id": ${_id}

@@ -24,6 +24,7 @@ import {
 } from '@material-ui/core';
 
 import NumberFormat from 'react-number-format';
+import { URI_REST } from 'utils/global';
 function ModalEdit(props){
     
     return(
@@ -96,7 +97,7 @@ export default class FallasVehiculares extends React.Component{
     }
 
     loadData = () => {
-        fetch(`https://rest-api-auxcar.cloudno.de/api/fallas-vehiculares`)
+        fetch(`${URI_REST}/api/fallas-vehiculares`)
         .then(response=>{
             return response.json();
         })
@@ -145,7 +146,7 @@ export default class FallasVehiculares extends React.Component{
     };
 
     updateFalla = (_id) =>{
-        fetch(`https://rest-api-auxcar.cloudno.de/api/fallas-vehiculares/edit`,{
+        fetch(`${URI_REST}/api/fallas-vehiculares/edit`,{
             method: 'POST',
             body: `{
                 "_id": ${_id},
